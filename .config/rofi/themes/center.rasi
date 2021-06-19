@@ -1,0 +1,4 @@
+configuration {
+}
+// from $ rofi-theme-selector
+@import "/usr/share/rofi/themes/Arc-Dark.rasi"
