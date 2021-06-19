@@ -2,6 +2,18 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
+
+-- =====================================================================================
+-- requirements:
+-- rofi			application launcher
+-- feh			for background
+-- compton		compositor
+-- redshift		for nightlight
+
+-- choose terminal emulator, browser and text editor on line 81
+-- =====================================================================================
+
+
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -22,9 +34,6 @@ require("awful.hotkeys_popup.keys")
 local debian = require("debian.menu")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
 
--- Volume widget
-local volume = require("volume")
-
 
 -- =====================================================================================
 -- Custom functions
@@ -33,6 +42,8 @@ lock_screen = function () awful.util.spawn("slock") end
 -- Battery widget
 local battery_widget = require("battery-widget")
 local BAT0 = battery_widget {battery_prefix = ""}
+-- Volume widget
+local volume = require("volume")
 -- =====================================================================================
 
 

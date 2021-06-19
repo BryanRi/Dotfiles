@@ -29,6 +29,6 @@ end
  
 update_volume(volume_widget)
  
-mytimer = timer({ timeout = 60 })
+mytimer = timer({ timeout = 60 }) --change timeout to in/decrease the update interval
 mytimer:connect_signal("timeout", function () update_volume(volume_widget) end)
 mytimer:start()
