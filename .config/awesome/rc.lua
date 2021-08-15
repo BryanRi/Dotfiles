@@ -318,7 +318,7 @@ globalkeys = gears.table.join(
 		--https://stackoverflow.com/questions/62251245/awesomewm-update-watch-widget-on-keypress
 			"amixer -D pulse sset Master 5%-", {
 			exit = function () 
-				awful.widget.watch("volume_widget", 6):emit_signal("timeout") 
+				awful.widget.watch("volume_widget", 0):emit_signal("timeout") 
 			end})
 		end),
 	awful.key({}, "XF86AudioMute", function () 
@@ -420,6 +420,9 @@ globalkeys = gears.table.join(
 			  {description = "launch " .. browser_1 .. " browser", group = "applications"}),
 	awful.key({ modkey			}, "t",	function () awful.util.spawn("emacs")			end,
 			  {description = "launch emacs" ,group = "applications"}),
+	awful.key({ modkey			}, "l",	function () 
+						awful.spawn.with_shell("GTK_THEME=Adwaita:dark nautilus")		end,
+			  {description = "launch nautilus with dark mode" ,group = "applications"}),
 
 
     -- Prompt
@@ -686,7 +689,8 @@ autorunApps =
 {
    "compton",
    "fehbg",		--runs the file in /usr/bin/fehbg
---   "redshift -c ~/.config/redshift.conf", --turns on nightlight
+   "redshift -c ~/.config/redshift.conf", --turns on nightlight
+   "disable-xdg-screensaver", -- disable screensaver of the root window, find root window with: $ xwininfo -root
 }
 if autorun then
    for app = 1, #autorunApps do
