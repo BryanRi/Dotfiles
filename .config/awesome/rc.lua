@@ -339,7 +339,6 @@ globalkeys = gears.table.join(
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
-
 	-- change focus
     awful.key({ modkey,           }, "n",
         function ()
@@ -689,7 +688,7 @@ autorunApps =
 {
    "compton",
    "fehbg",		--runs the file in /usr/bin/fehbg
-   "redshift -c ~/.config/redshift.conf", --turns on nightlight
+--   "redshift -c ~/.config/redshift.conf", --turns on nightlight
    "disable-xdg-screensaver", -- disable screensaver of the root window, find root window with: $ xwininfo -root
 }
 if autorun then
