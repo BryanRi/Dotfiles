@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# renaming of the all audiofiles downloaded with yt-dl by deleting the random string at the end.
+
+for file in *.mp3;
+do 
+	mv -i "$file" "$(echo "$file" | cut -f -1-2 -d '-').mp3"
+done

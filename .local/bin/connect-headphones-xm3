@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# script to connect to my LE_WH-1000XM3 headphones
+# use 
+# $ bluetoothctl devices 
+# to list the bluetooth devices that have been connected to the pc previously
+
+sudo systemctl start bluetooth
+rfkill unblock bluetooth
+echo -e "connect 38:18:4C:05:C7:A6" | bluetoothctl
