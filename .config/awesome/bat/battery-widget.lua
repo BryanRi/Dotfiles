@@ -1,3 +1,4 @@
+-- changed line 138, 281-283
 -- Battery widget
 
 local awful = require("awful")
@@ -135,7 +136,8 @@ function battery_widget:init(args)
     self.percent_colors = args.percent_colors or args.limits or {
         { 10, "red"   },
         { 20, "orange"},
-        {999, "white" },
+        { 80, "white"},
+        {999, "green" },
     }
 
     self.widget_text = args.widget_text or (
@@ -271,6 +273,13 @@ function battery_widget:update()
         if (ctx.state == "discharging" and
                 ctx.percent and ctx.percent <= self.alert_threshold) then
             self:notify(substitute(self.alert_title, ctx),
+                        substitute(self.alert_text, ctx))
+        -- this elseif does not appear to work as intended
+        -- it should create a popup widget the same way as
+        -- it does when ctx.percent <= self.alert_threshold
+        -- in the if statement above but then when ctx.percent >= 80%
+        elseif ctx.state == "charging" and ctx.percent >= 80 then
+            self:notify(substitute('Remove power chord', ctx),
                         substitute(self.alert_text, ctx))
         elseif ctx.state == "full" and self.warn_full_battery then
             self:notify('Battery Full!', 'Remove power chord')
