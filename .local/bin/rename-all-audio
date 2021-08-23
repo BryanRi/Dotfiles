@@ -4,5 +4,5 @@
 
 for file in *.mp3;
 do 
-	mv -i "$file" "$(echo "$file" | cut -f -1-2 -d '-').mp3"
+	mv -i "$file" "$(echo "$file" | cut -f 1-2 -d '-').mp3"
 done
