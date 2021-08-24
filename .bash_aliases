@@ -9,6 +9,8 @@ alias wifion='nccli radio wifi on'
 
 # commands with extra flags
 alias mvi='mv -i'
+alias cpi='cp -i'
+alias ll='exa -al --color=always --group-directories-first' # ls replacement
 
 # xclip copy and paste 
 alias xcopy='xclip -selection c'
