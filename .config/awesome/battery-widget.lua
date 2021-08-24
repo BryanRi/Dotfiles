@@ -1,3 +1,4 @@
+-- changed line  149, 152, 277
 -- https://awesomeopensource.com/project/deficient/battery-widget
 -- Battery widget
 
@@ -145,8 +146,10 @@ function battery_widget:init(args)
         "Battery ${state}${time_est}\nCapacity: ${capacity_percent}%")
 
     self.alert_threshold = args.alert_threshold or 5
+    self.alert_threshold2 = args.alert_threshold or 80
     self.alert_timeout = args.alert_timeout or 0
     self.alert_title = args.alert_title or "Low battery !"
+    self.alert_title2 = args.alert_title or "Battery at 80%"
     self.alert_text = args.alert_text or "${AC_BAT}${time_est}"
 
     self.widget = wibox.widget.textbox()
@@ -272,6 +275,10 @@ function battery_widget:update()
         if (ctx.state == "discharging" and
                 ctx.percent and ctx.percent <= self.alert_threshold) then
             self:notify(substitute(self.alert_title, ctx),
+                        substitute(self.alert_text, ctx))
+        elseif (ctx.state == "charging" and
+                ctx.percent and ctx.percent >= self.alert_threshold2) then
+            self:notify(substitute(self.alert_title2, ctx),
                         substitute(self.alert_text, ctx))
         elseif ctx.state == "full" and self.warn_full_battery then
             self:notify('Battery Full!', 'Remove power chord')
