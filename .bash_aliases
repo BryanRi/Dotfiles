@@ -61,7 +61,7 @@ alias tstl='git stash list'
 alias tstp='git stash pop'
 alias tsts='git stash save'
 ## Managing dotfiles
-alias dot='/usr/bin/git --git-dir=/home/bryan/.dotfiles/ --work-tree=/home/bryan'
+alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias dots='dot status'
 alias dota='dot add'
 alias dotau='dot add --update'
