@@ -1,5 +1,3 @@
-""https://www.alexeyshmalko.com/2014/using-vim-as-c-cpp-ide/
-
 "" ================================== color scheme 
 syntax on
 "let g:airline_theme='onedark'      " does not work for statusline
