@@ -9,6 +9,7 @@ pcall(require, "luarocks.loader")
 -- feh			for background
 -- compton		compositor
 -- redshift		for nightlight
+-- terminal     alacritty
 
 -- choose terminal emulator, browser and text editor on line 81
 -- =====================================================================================
@@ -79,8 +80,9 @@ end
 beautiful.init("/home/bryan/.config/awesome/themes/xresources/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "x-terminal-emulator"
-browser_0 = "brave"
+#terminal = "x-terminal-emulator"
+terminal = "alacritty"
+browser_0 = "brave-browser-nightly"
 browser_1 = "nyxt"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
@@ -687,7 +689,7 @@ autorun = true
 autorunApps =
 {
    "compton",
-   "fehbg",		--runs the file in /usr/bin/fehbg
+   "fehbg",
 --   "redshift -c ~/.config/redshift.conf", --turns on nightlight
    "disable-xdg-screensaver", -- disable screensaver of the root window, find root window with: $ xwininfo -root
 }
