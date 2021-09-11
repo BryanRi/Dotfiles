@@ -80,7 +80,7 @@ end
 beautiful.init("/home/bryan/.config/awesome/themes/xresources/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-#terminal = "x-terminal-emulator"
+--terminal = "x-terminal-emulator"
 terminal = "alacritty"
 browser_0 = "brave-browser-nightly"
 browser_1 = "nyxt"
