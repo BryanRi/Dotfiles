@@ -6,4 +6,4 @@
 # xwininfo -root | awk '\$1 == "xwininfo:" {print \$4}'
 
 # disable the screensaver
-xdg-screensaver suspend 0x7c8 # $window_id
+xdg-screensaver suspend 0x7a8 # $window_id
