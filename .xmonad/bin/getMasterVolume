@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# use this bars for easynote
+#bars=$(amixer get Master | awk -F'[]%[]' '/%/ {if ($7 == "off") { print "MM" } else { print $2 }}' | head -n 1)
+#echo "$bars"
+
+# use this bars (and inOn) for xps on arch
+bars=$(amixer get 'PGA3.1 3 Master' | tail -n 1 | awk '{print $5}' | /usr/bin/tr -d '[]')
+isOn=$(amixer get Speaker | tail -n 1 | awk '{if ($3 == "[off]") {print "MM"}}')
+
+echo "$bars$isOn"

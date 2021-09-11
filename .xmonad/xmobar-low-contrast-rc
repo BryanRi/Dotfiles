@@ -1,0 +1,62 @@
+-- xmobar config used by Vic Fryzel
+-- Author: Vic Fryzel
+-- https://github.com/vicfryzel/xmonad-config
+
+-- This xmobar config is for a single 4k display (3840x2160) and meant to be
+-- used with the stalonetrayrc-single config.
+--
+-- If you're using a single display with a different resolution, adjust the
+-- position argument below using the given calculation.
+Config {
+    -- Position xmobar along the top, with a stalonetray in the top right.
+    -- Add right padding to xmobar to ensure stalonetray and xmobar don't
+    -- overlap. stalonetrayrc-single is configured for 12 icons, each 23px
+    -- wide. 
+    -- right_padding = num_icons * icon_size
+    -- right_padding = 12 * 23 = 276
+    -- Example: position = TopP 0 276
+    position = TopW L 100
+    font = "xft:monospace-10.5",
+    bgColor = "#000000",
+    fgColor = "#FFFFCC",
+    lowerOnStart = False,
+    overrideRedirect = False,
+    allDesktops = True,
+    persistent = True,
+    commands = [
+        -- battery monitor
+        Run Battery [ "--template" , "<acstatus>"
+                    , "--Low"      , "15"        -- units: %
+                    , "--High"     , "80"        -- units: %
+                    , "--low"      , "orange"
+                    , "--normal"   , "#DDDDDD"
+                    , "--high"     , "#DDDDDD"
+
+                    , "--" -- battery specific options
+                        -- discharging status
+                        , "-o"  , "Batt:<left>% (<timeleft>)"
+                        -- AC "on" status
+                        , "-O"    , "AC:<left>% (<timeleft>)"
+                        -- charged status
+                        , "-i"  , "<fc=#849E8B>Charged</fc>"
+                    ] 600
+--        , Run MultiCpu ["-t","Cpu: <total0> <total1> <total2> <total3>","-L","30","-H","60","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC","-w","3"] 10
+--        , Run Memory ["-t","Mem: <usedratio>%","-H","8192","-L","4096","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10
+        , Run Date "%a %b %_d %H:%M" "date" 300
+        , Run Com "/home/br/.xmonad/bin/getMasterVolume" [] "volume" 600
+        , Run StdinReader
+    ],
+    sepChar = "%",
+    alignSep = "}{",
+--    template = "<fc=#000000>%StdinReader%</fc> }{ %multicpu%  %memory%  %battery%  Vol:%volume%  <fc=#FFFFCC>%date%</fc>"
+    template =  -- left
+                "<fc=#000000>%StdinReader%</fc> \
+            \}\
+                -- middle
+            \\
+                -- right
+            \{\
+                \<box type=Left color=#777777> %battery%</box> \
+                \<box type=Left color=#777777> <fc=#DDDDDD>Vol:%volume%</fc></box> \
+                \<box type=Left color=#777777> <fc=#DDDDDD>%date% </fc></box>"
+}
