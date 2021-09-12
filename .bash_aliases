@@ -7,6 +7,41 @@ alias ssn='shutdown now'
 alias wifioff='nccli radio wifi off'
 alias wifion='nccli radio wifi on'
 
+# mount usb, writable by non-root users
+alias mounto='doas mount -o gid=users,fmask=113,dmask=002'
+
+# apt
+alias apti='sudo apt install'
+alias aptr='sudo apt remove'
+alias aptu='sudo apt update'
+alias aptuu='sudo apt update && sudo apt upgrade'
+alias aptar='sudo apt autoremove'
+
+# pacman and yay
+alias pacs='doas pacman -S'
+alias pacsyu='doas pacman -Syyu'                 # update only standard pkgs
+alias yaysua='yay -Sua --noconfirm'              # update only AUR pkgs (yay)
+alias yaysyu='yay -Syu --noconfirm'              # update standard pkgs and AUR pkgs (yay)
+alias parsua='paru -Sua --noconfirm'             # update only AUR pkgs (paru)
+alias parsyu='paru -Syu --noconfirm'             # update standard pkgs and AUR pkgs (paru)
+alias unlock='doas rm /var/lib/pacman/db.lck'    # remove pacman lock
+alias cleanup='doas pacman -Rns (pacman -Qtdq)'  # remove orphaned packages
+
+# get fastest mirrors
+alias mirror="doas reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
+alias mirrord="doas reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
+alias mirrors="doas reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
+alias mirrora="doas reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
+
+# Colorize grep output (good for log files)
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|ta    il -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
 # commands with extra flags
 alias mvi='mv -i'
 alias cpi='cp -i'
