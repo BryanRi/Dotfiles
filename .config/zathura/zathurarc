@@ -26,7 +26,7 @@ set scroll-hstep 80
 # zathurarc-dark
 
 set font "inconsolata 15"
-set default-bg "#000000" #00
+set default-bg "#1d1f21" #00
 set default-fg "#F7F7F6" #01
 
 set statusbar-fg "#B0B0B0" #04
