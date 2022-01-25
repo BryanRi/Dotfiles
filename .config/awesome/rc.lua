@@ -222,7 +222,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Each screen has its own tag table.
 	awful.tag(
-		{ "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+		{ "1: web", "2: term", "3: code", "4: plan", "5: chat", "6", "7", "8", "9" },
 		s,
 		awful.layout.layouts[1]
 	)
@@ -325,11 +325,14 @@ globalkeys = gears.table.join(
 		end),
 	awful.key({}, "XF86AudioMute", function () 
 		awful.util.spawn("amixer -D pulse sset Master toggle", false) end),
-	-- Screen brightness keys (not working on ubuntu)
+	-- make sure the user is able to execute the chbrightness command with
+    -- root rights without entering the root password by editing the sudoers file
+    -- add the line:
+    -- [user name] ALL=NOPASSWD:/usr/bin/chbrightness
 	awful.key({ }, "XF86MonBrightnessDown", function ()
-        os.execute("xbacklight -dec 15") end),
+		awful.util.spawn("sudo chbrightness -", false) end),
     awful.key({ }, "XF86MonBrightnessUp", function ()
-        os.execute("xbacklight -inc 15") end),
+		awful.util.spawn("sudo chbrightness +", false) end), 
 	-- Awesome keys
     awful.key({ modkey, "Shift"   }, "x",     lock_screen, 
               {description="lock screen", group="awesome"}),
@@ -613,9 +616,11 @@ awful.rules.rules = {
       }, properties = { titlebars_enabled = false }
     },
 
-    -- Set Firefox to always map on the tag named "2" on screen 1.
+    -- Set rules not working properly
     -- { rule = { class = browser },
-      -- properties = { screen = 1, tag = "2" } },
+    --   properties = { tag = "1: web" } },
+    -- { rule = { instance = "Discord" },
+    --   properties = { tag = "5: chat" } },
 }
 -- }}}
 
@@ -690,8 +695,12 @@ autorunApps =
 {
    "compton",
    "fehbg",
+   "activitywatch/aw-qt",
+   "sudo chbrightness 4000",
    "redshift -c ~/.config/redshift.conf", --turns on nightlight
    "disable-xdg-screensaver", -- disable screensaver of the root window, find root window with: $ xwininfo -root
+   "xinput set-prop 'DELL098F:00 04F3:311C Touchpad' 'libinput Tapping Enabled' 1", -- find the name of the touchpad device with 'xinput list' and 'xinput list-props' for all properties
+   "xinput set-prop 'DELL098F:00 04F3:311C Touchpad' 'libinput Accel Speed' .5" 
 }
 if autorun then
    for app = 1, #autorunApps do
