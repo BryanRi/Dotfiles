@@ -5,11 +5,14 @@
 # to find the proper path to the brightness file use
 # $ find /sys/ -name brightness
 
-path="/sys/devices/pci0000:00/0000:00:02.0/drm/card0/card0-eDP-1/intel_backlight/brightness"
+#path="/sys/devices/pci0000:00/0000:00:02.0/drm/card0/card0-eDP-1/intel_backlight/brightness"
+path="/sys/class/backlight/intel_backlight/brightness"
 max_brightness=20000
 min_brightness=500
 low=1500
 high=10000
+current=$(cat $path)
+change=500
 
 if [[ $1 == "show" ]]; then
 	cat $path
@@ -17,6 +20,10 @@ elif [[ $1 == "low" ]]; then
 	echo "$low" > $path
 elif [[ $1 == "high" ]]; then
 	echo "$high" > $path
+elif [[ $1 == "+" ]]; then
+	echo "$(($current+$change))" > $path
+elif [[ $1 == "-" ]]; then
+	echo "$(($current-$change))" > $path
 elif [[ $1 =~ ^-?[0-9]+$ ]]; then
 	if [[ $1 -le $min_brightness ]] || [[ $1 -ge $max_brightness ]]; then
 		echo "enter values between" $min_brightness "and" $max_brightness
