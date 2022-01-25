@@ -145,7 +145,7 @@ function battery_widget:init(args)
     self.tooltip_text = args.tooltip_text or (
         "Battery ${state}${time_est}\nCapacity: ${capacity_percent}%")
 
-    self.alert_threshold = args.alert_threshold or 5
+    self.alert_threshold = args.alert_threshold or 15
     self.alert_threshold2 = args.alert_threshold or 80
     self.alert_timeout = args.alert_timeout or 0
     self.alert_title = args.alert_title or "Low battery !"
@@ -164,7 +164,7 @@ function battery_widget:init(args)
         awful.button({ }, 3, function() self:update() end)
     ))
 
-    self.timer = timer({ timeout = args.timeout or 10 })
+    self.timer = timer({ timeout = args.timeout or 30 })
     self.timer:connect_signal("timeout", function() self:update() end)
     self.timer:start()
     self:update()
