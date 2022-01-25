@@ -1,3 +1,5 @@
+"" ~/.vimrc
+
 "" ================================== color scheme 
 syntax on
 "let g:airline_theme='onedark'      " does not work for statusline
@@ -33,6 +35,7 @@ highlight StatusLine    ctermfg=7    ctermbg=8      cterm=none
 "" ================================== line numbers 
 set relativenumber
 set number
+highlight LineNr guifg=#DDA500
 
 "" ================================== tab width 
 set tabstop=4
