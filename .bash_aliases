@@ -1,6 +1,8 @@
 # Lazy way to get back 1/2 dirs
 alias ..='cd ..'
 alias ...='cd ../..'
+alias ru='cd /media/bryan/ru'
+alias fp='cd /media/bryan/ru/fp/'
 
 # system
 alias ssn='shutdown now'
@@ -8,7 +10,10 @@ alias wifioff='nccli radio wifi off'
 alias wifion='nccli radio wifi on'
 
 # mount usb, writable by non-root users
-alias mounto='doas mount -o gid=users,fmask=113,dmask=002'
+#alias mounto='sudo mount -o gid=users,fmask=113,dmask=002'
+alias mounto='sudo mount -o uid=1000,fmask=113,dmask=002'
+alias mtu='sudo mount -o uid=1000,fmask=113,dmask=002 /dev/sda1 /media/bryan/'
+alias mto='sudo umount /dev/sda1'
 
 # apt
 alias apti='sudo apt install'
@@ -53,8 +58,9 @@ alias xpaste='xclip -selection c -o'
 ## clear clipboard
 alias xcc='xclip -sel clip < /dev/null' 
 
-# Package installer for python3
+# Programming
 alias pip='pip3'
+alias note='~/anaconda3/bin/jupyter-notebook'
 
 # Download an audio file from youtube with youtube-dl
 alias yt-dl-audio='youtube-dl -x --audio-format mp3'
@@ -67,7 +73,8 @@ alias tau='git add --update'
 alias tb='git branch'
 alias tbd='git branch --delete '
 alias tc='git commit'
-alias tcache='git confit --global credential.helper cache'
+alias tcache='git config --global credential.helper cache'
+alias tcon='git config --global user.name "Your_Name" && git config --global user.email "Your-Email"'
 alias tcm='git commit --message'
 alias tcf='git commit --fixup'
 alias tcl='git clone'
