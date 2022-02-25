@@ -1,3 +1,6 @@
+# webgoat
+alias webgoat='java -jar ~/Downloads/webgoat-server-8.2.2.jar'
+
 # Lazy way to get back 1/2 dirs
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -6,8 +9,8 @@ alias fp='cd /media/bryan/ru/fp/'
 
 # system
 alias ssn='shutdown now'
-alias wifioff='nccli radio wifi off'
-alias wifion='nccli radio wifi on'
+alias wifioff='nmcli radio wifi off'
+alias wifion='nmcli radio wifi on'
 
 # mount usb, writable by non-root users
 #alias mounto='sudo mount -o gid=users,fmask=113,dmask=002'
