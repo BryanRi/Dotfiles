@@ -24,9 +24,7 @@ set -o vi
 
 ### PROMPT 
 # This is commented out if using starship prompt 
-PROMPT_COMMAND='echo -e "\e[0;36m$PWD\e[0m"'
-PS1='\e[0;33m[\u@\h]\e[m \e[0;36m\$\e[0m '
-#PS1='[\u@\h] \$ '
+PS1='\e[0;36m\w\e[0m\n\e[0;33m[\u@\h]\e[m\e[0;36m\$\e[0m '
 
 ### SHOPT 
 # If set, the pattern "**" used in a pathname expansion context will
