@@ -77,12 +77,12 @@ end
 -- =====================================================================================
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("/home/bryan/.config/awesome/themes/xresources/theme.lua")
+beautiful.init("/home/br/.config/awesome/themes/xresources/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 --terminal = "x-terminal-emulator"
 terminal = "alacritty"
-browser_0 = "brave-browser-nightly"
+browser_0 = "brave-browser"
 browser_1 = "nyxt"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
@@ -695,7 +695,7 @@ autorunApps =
 {
    "compton",
    "fehbg",
-   "activitywatch/aw-qt",
+   --"activitywatch/aw-qt",
    "sudo chbrightness 4000",
    "redshift -c ~/.config/redshift.conf", --turns on nightlight
    "disable-xdg-screensaver", -- disable screensaver of the root window, find root window with: $ xwininfo -root
