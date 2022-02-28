@@ -6,12 +6,14 @@ syntax on
 if (has("autocmd"))
   augroup colorextend
     autocmd!
-    " Set comment color to a lighter gray
-    autocmd ColorScheme * call onedark#extend_highlight("Comment", { "fg": { "gui": "#9DA1A9" } })
+    " Set comment color to a lighter gray for onedark theme
+    " autocmd ColorScheme * call onedark#extend_highlight("Comment", { "fg": { "gui": "#9DA1A9" } })
     " even lighter grey
     "autocmd ColorScheme * call onedark#extend_highlight("Comment", { "fg": { "gui": "#ADB1B7" } })
   augroup END
 endif
+"let g:gruvbox_contrast_dark='hard'
+set bg=dark
 colorscheme gruvbox
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -27,10 +29,11 @@ if (empty($TMUX))
 endif
 
 "" ================================== statusline 
-set laststatus=2
-set statusline=%<%F\ %h%m%r%y   "" leftside (file-path, help-buffer, modified, readonly, file type)
-set statusline+=%=%-14.(%l,%c%V%)\ %P   "" rightside (lineno, columnno, percentage)
-highlight StatusLine    ctermfg=7    ctermbg=8      cterm=none
+"set laststatus=2
+"set statusline=%<%F\ %h%m%r%y   "" leftside (file-path, help-buffer, modified, readonly, file type)
+"set statusline+=%=%-14.(%l,%c%V%)\ %P   "" rightside (lineno, columnno, percentage)
+"highlight StatusLine    ctermfg=7    ctermbg=8      cterm=none
+let g:airline_theme='gruvbox'
 
 "" ================================== line numbers 
 set relativenumber
