@@ -116,8 +116,9 @@ set statusline="  Hint: %z%= %A %10u:%-7g %15s %20d  "
 
 " :mark mark /full/directory/path [filename]
 
-mark b ~/bin/
 mark h ~/
+mark d ~/Desktop/
+mark c ~/.config/
 
 " ------------------------------------------------------------------------------
 
@@ -230,15 +231,16 @@ filetype *.[1-8] man ./%c
 fileviewer *.[1-8] man ./%c | col -b
 
 " Images
-filextype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
-        \ {View in sxiv}
-        \ sxiv %f,
-        \ {View in gpicview}
-        \ gpicview %c,
-        \ {View in shotwell}
-        \ shotwell,
-fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
-         \ identify %f
+filextype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm feh %f &
+"filextype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
+"        \ {View in sxiv}
+"        \ sxiv %f,
+"        \ {View in gpicview}
+"        \ gpicview %c,
+"        \ {View in shotwell}
+"        \ shotwell,
+"fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
+"         \ identify %f
 
 " OpenRaster
 filextype *.ora
@@ -436,10 +438,11 @@ endif
 " Mappings for faster renaming
 nnoremap I cw<c-a>
 nnoremap cc cw<c-u>
+nnoremap cC cW
 nnoremap A cw
 
 " Open console in current directory
-nnoremap ,t :!xterm &<cr>
+nnoremap ,t :!alacritty &<cr>
 
 " Open editor to edit vifmrc and apply settings after returning to vifm
 nnoremap ,c :write | edit $MYVIFMRC | restart<cr>
