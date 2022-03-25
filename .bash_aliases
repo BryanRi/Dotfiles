@@ -19,11 +19,11 @@ alias mtu='sudo mount -o uid=1000,fmask=113,dmask=002 /dev/sda1 /media/br/'
 alias mto='sudo umount /dev/sda1'
 
 # apt
-alias apti='sudo apt install'
-alias aptr='sudo apt remove'
-alias aptu='sudo apt update'
-alias aptuu='sudo apt update && sudo apt upgrade'
-alias aptar='sudo apt autoremove'
+alias ati='sudo apt install'
+alias atr='sudo apt remove'
+alias atu='sudo apt update'
+alias atuu='sudo apt update && sudo apt upgrade'
+alias atar='sudo apt autoremove'
 
 # pacman and yay
 alias pacs='doas pacman -S'
@@ -54,10 +54,11 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias mvi='mv -i'
 alias cpi='cp -i'
 alias ll='exa -al --color=always --group-directories-first' # ls replacement
+alias md='mkdir -p'
 
 # xclip copy and paste 
-alias xcopy='xclip -selection c'
-alias xpaste='xclip -selection c -o'
+alias xc='xclip -selection c'
+alias xv='xclip -selection c -o'
 ## clear clipboard
 alias xcc='xclip -sel clip < /dev/null' 
 
