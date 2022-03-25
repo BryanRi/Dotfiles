@@ -1,8 +1,15 @@
 "" ~/.vimrc
 
+"" ================================== move all config files to .config
+"" https://vi.stackexchange.com/questions/11879/how-can-put-vimrc-and-viminfo-into-vim-directory
+set viminfo+="~/.config/vim/viminfo"
+let rtp=&runtimepath
+set runtimepath=~/.config/vim
+let &runtimepath.=','.rtp.',~/.config/vim/after'
+
 "" ================================== color scheme 
 syntax on
-"let g:airline_theme='onedark'      " does not work for statusline
+
 if (has("autocmd"))
   augroup colorextend
     autocmd!
