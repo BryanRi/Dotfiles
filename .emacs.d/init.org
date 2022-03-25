@@ -751,9 +751,9 @@ Try these commands with =M-x=:
 
 #+begin_src emacs-lisp
 
-  (use-package haskell-mode
-    :mode "\\.hs\\'"
-    :hook (haskell-indentation-mode haskell-interactive-mode))
+  (use-package haskell-mode)
+;    :mode "\\.hs\\'"
+;    :hook (haskell-indentation-mode haskell-interactive-mode))
 
 ;  (use-package haskell-mode
 ;    :mode "\\.hs\\"
@@ -932,6 +932,40 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 
 #+end_src
 
+* Small utils
+** evil-surround
+
+Useful utility to surround text with any kind of characters, i.e. ', ", [], even html tags or whatever you want. It is based on surround.vim. See [[https://github.com/emacs-evil/evil-surround][evil-surround]] for documentation.
+
+*Useful key bindings:*
+
+- =S '= - in VISUAL mode, to surround the selected text with '
+- =c s " '= - in NORMAL mode, to change the text surrounded by " to '
+- The ="= and ='= can be replace by any text object.
+
+#+BEGIN_SRC emacs-lisp
+
+  (use-package evil-surround
+    :ensure t
+    :config
+    (global-evil-surround-mode 1))
+
+#+END_SRC
+
+** evil-matchit
+
+Vim matchit.vim by Benji Fisher is ported into Emacs, [[https://github.com/redguardtoo/evil-matchit][evil-matchit]].
+Press =%= to jump between matched tags in Emacs. For example, in HTML “<div>” and “</div>” are a pair of tags.
+
+#+BEGIN_SRC emacs-lisp
+
+  (use-package evil-matchit
+    :ensure t
+    :config
+    (global-evil-matchit-mode 1))
+
+#+END_SRC
+
 * Terminals
 
 ** term-mode
@@ -956,7 +990,7 @@ Run a terminal with =M-x term!=
 ;  (use-package term
 ;    :commands term
 ;    :config
-;    (setq explicit-shell-file-name "bash") ;; Change this to zsh, etc
+;    (setq explicit-shell-file-name =bash=) ;; Change this to zsh, etc
     ;;(setq explicit-zsh-args '())         ;; Use 'explicit-<shell>-args for shell-specific args
 
     ;; Match the default Bash shell prompt.  Update this if you have a custom prompt
@@ -1138,7 +1172,7 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
     :ensure nil
     :commands (dired dired-jump)
     :bind (("C-x C-j" . dired-jump))
-    :custom ((dired-listing-switches "-Alh --group-directories-first"))
+    :custom ((dired-listing-switches "-Alhu --group-directories-first"))
     :config
     (evil-collection-define-key 'normal 'dired-mode-map
       "h" 'dired-single-up-directory
