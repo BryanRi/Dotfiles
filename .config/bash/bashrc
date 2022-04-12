@@ -1,16 +1,31 @@
 ### ~/.bashrc
 
+# if using bash configs in the .config directory then add the following lines to /etc/bash.bashrc
+#if [[ -f "$XDG_CONFIG_HOME/bash/bashrc" ]]; then
+#    source "$XDG_CONFIG_HOME/bash/bashrc"
+#fi
+
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
 if [[ -f $HOME/.bash_aliases ]]; then
     . $HOME/.bash_aliases
+elif [[ -f $XDG_CONFIG_HOME/bash/bash_aliases ]]; then
+    . $XDG_CONFIG_HOME/bash/bash_aliases
 fi
 
 ### EXPORT 
 export TERM='xterm-256color'                      # getting proper colors 
 export HISTCONTROL=ignoredups:erasedups           # no duplicate entries
 export EXA_COLORS='da=37:di=36'
+# moving config files from $HOME to $XDG_CONFIG_HOME
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"  # could break some DM's
+export VIMINIT="source $XDG_CONFIG_HOME/vim/vimrc"
+export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+export HISTFILE="$XDG_CONFIG_HOME/bash/history"
+export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
+export CABAL_CONFIG="$XDG_CONFIG_HOME/cabal/config"
+export CABAL_DIR="$XDG_CACHE_HOME/cabal"
 # "vim" as manpager
 export MANPAGER='/bin/bash -c "vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
 
@@ -56,7 +71,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-[ -f "/home/bryan/.ghcup/env" ] && source "/home/bryan/.ghcup/env" # ghcup-env
+[ -f "/home/br/.ghcup/env" ] && source "/home/br/.ghcup/env" # ghcup-env
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!

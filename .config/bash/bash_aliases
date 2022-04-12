@@ -1,11 +1,18 @@
 # webgoat
 alias webgoat='java -jar ~/Downloads/webgoat-server-8.2.2.jar'
 
-# Lazy way to get back 1/2 dirs
+# Quickly change directories
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ru='cd /media/br/ru'
 alias fp='cd /media/br/ru/fp/'
+alias .d='cd $HOME/Desktop/'
+alias .dl='cd $HOME/Downloads/'
+
+# Edit config files
+alias ,b='vim $HOME/.config/bash/bashrc'
+alias ,ba='vim $HOME/.config/bash/bash_aliases'
+alias ,awm='vim $HOME/.config/awesome/rc.lua'
 
 # system
 alias ssn='shutdown now'
@@ -19,6 +26,7 @@ alias mtu='sudo mount -o uid=1000,fmask=113,dmask=002 /dev/sda1 /media/br/'
 alias mto='sudo umount /dev/sda1'
 
 # apt
+alias a='sudo apt'
 alias ati='sudo apt install'
 alias atr='sudo apt remove'
 alias atu='sudo apt update'
@@ -72,40 +80,11 @@ alias yt-dl-audio='youtube-dl -x --audio-format mp3'
 # Git
 alias ta='git add'
 alias taa='git add .'
-alias taaa='git add --all'
-alias tau='git add --update'
-alias tb='git branch'
-alias tbd='git branch --delete '
 alias tc='git commit'
 alias tcache='git config --global credential.helper cache'
 alias tcon='git config --global user.name "Your_Name" && git config --global user.email "Your-Email"'
-alias tcm='git commit --message'
-alias tcf='git commit --fixup'
 alias tcl='git clone'
-alias tco='git checkout'
-alias tcob='git checkout -b'
-alias tcom='git checkout master'
-alias tcos='git checkout staging'
-alias tcod='git checkout develop'
-alias td='git diff'
-alias tda='git diff HEAD'
-alias ti='git init'
-alias tlg='git log --graph --oneline --decorate --all'
-alias tld='git log --pretty=format:"%h %ad %s" --date=short --all'
-alias tm='git merge --no-ff'
-alias tma='git merge --abort'
-alias tmc='git merge --continue'
-alias tp='git pull'
-alias tpr='git pull --rebase'
-alias tr='git rebase'
 alias ts='git status'
-alias tss='git status --short'
-alias tst='git stash'
-alias tsta='git stash apply'
-alias tstd='git stash drop'
-alias tstl='git stash list'
-alias tstp='git stash pop'
-alias tsts='git stash save'
 ## Managing dotfiles
 alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias dots='dot status'
@@ -120,3 +99,5 @@ alias bc='bc -q'
 # Weather report
 alias weather='curl wttr.in/'
 
+# wget move wget-hsts file out of $HOME 
+alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
