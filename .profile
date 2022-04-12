@@ -11,8 +11,10 @@
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
+    if [ -f "$XDG_CONFIG_HOME/bash/bashrc" ]; then
+	    . "$XDG_CONFIG_HOME/bash/bashrc"
+    elif [ -f "$HOME/.bashrc" ]; then
+	    . "$HOME/.bashrc"
     fi
 fi
 

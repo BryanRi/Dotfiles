@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Generates a random man page for educational purposes
 
