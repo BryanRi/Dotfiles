@@ -751,7 +751,17 @@ Try these commands with =M-x=:
 
 #+begin_src emacs-lisp
 
-  (use-package haskell-mode)
+  
+(getenv "PATH")
+  (use-package lsp-haskell)
+
+  (use-package haskell-mode
+    :hook (haskell-mode . lsp-deferred))
+  (add-hook 'haskell-mode-hook #'lsp)
+  (add-to-list 'load-path "/home/br/.ghcup/bin")
+  (setenv "PATH" (concat (getenv "PATH") ":/home/br/.ghcup/bin"))
+  (setq exec-path (append exec-path '("/home/br/.ghcup/bin")))
+
 ;    :mode "\\.hs\\'"
 ;    :hook (haskell-indentation-mode haskell-interactive-mode))
 
