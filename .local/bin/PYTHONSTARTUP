@@ -1,0 +1,33 @@
+# sources: 
+# https://bugs.python.org/msg318437
+# https://docs.python.org/3/library/readline.html?highlight=readline#example
+
+### this solution does not appear to work
+# Must set the PYTHONHISTFILE environment variable.
+#if 'PYTHONHISTFILE' in os.environ:
+#        history = os.path.expanduser(os.environ['PYTHONHISTFILE'])
+#    elif 'XDG_DATA_HOME' in os.environ:
+#        history = os.path.join(os.path.expanduser(os.environ['XDG_DATA_HOME']),
+#                               'python', 'python_history')
+#    else:
+#        history = os.path.join(os.path.expanduser('~'),
+#                               '.python_history')
+#
+#    history = os.path.abspath(history)
+#    _dir, _ = os.path.split(history)
+#    os.makedirs(_dir, exist_ok=True)
+
+### this does work
+import atexit
+import os
+import readline
+
+histfile = os.path.join(os.path.expanduser("~"), ".cache/python/python_history")
+try:
+    readline.read_history_file(histfile)
+    # default history len is -1 (infinite), which may grow unruly
+    readline.set_history_length(1000)
+except FileNotFoundError:
+    pass
+
+atexit.register(readline.write_history_file, histfile)
