@@ -1,31 +1,35 @@
 ### ~/.bashrc
 
 # if using bash configs in the .config directory then add the following lines to /etc/bash.bashrc
-#if [[ -f "$XDG_CONFIG_HOME/bash/bashrc" ]]; then
-#    source "$XDG_CONFIG_HOME/bash/bashrc"
+#if [ -s "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc" ]; then
+#    . "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc"
 #fi
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-if [[ -f $HOME/.bash_aliases ]]; then
-    . $HOME/.bash_aliases
-elif [[ -f $XDG_CONFIG_HOME/bash/bash_aliases ]]; then
-    . $XDG_CONFIG_HOME/bash/bash_aliases
-fi
+[ -f "$HOME/.bash_aliases" ] && . "$HOME/.bash_aliases"
+[ -f "$XDG_CONFIG_HOME/bash/bash_aliases" ] && . "$XDG_CONFIG_HOME/bash/bash_aliases"
 
-### EXPORT 
-export TERM='xterm-256color'                      # getting proper colors 
-export HISTCONTROL=ignoredups:erasedups           # no duplicate entries
+### EXPORTS
 export EXA_COLORS='da=37:di=36'
+export HISTCONTROL=ignoredups:erasedups           # no duplicate entries
+export TERM='xterm-256color'                      # getting proper colors 
+# set the XDG base directories
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
 # moving config files from $HOME to $XDG_CONFIG_HOME
-export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"  # could break some DM's
-export VIMINIT="source $XDG_CONFIG_HOME/vim/vimrc"
-export WGETRC="$XDG_CONFIG_HOME/wgetrc"
-export HISTFILE="$XDG_CONFIG_HOME/bash/history"
-export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
 export CABAL_CONFIG="$XDG_CONFIG_HOME/cabal/config"
 export CABAL_DIR="$XDG_CACHE_HOME/cabal"
+export GTK_RC_FILES="$XDG_CONFIG_HOME/gtk-1.0/gtkrc-1.0"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
+export HISTFILE="$XDG_CONFIG_HOME/bash/history"
+export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
+export PYTHONSTARTUP=".local/bin/PYTHONSTARTUP"         # to move .python_history
+export VIMINIT="source $XDG_CONFIG_HOME/vim/vimrc"
+export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"  # could break some DM's
 # "vim" as manpager
 export MANPAGER='/bin/bash -c "vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
 
@@ -72,21 +76,6 @@ if ! shopt -oq posix; then
 fi
 
 [ -f "/home/br/.ghcup/env" ] && source "/home/br/.ghcup/env" # ghcup-env
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/bryan/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/bryan/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/bryan/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/bryan/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
 ### ARCHIVE EXTRACTION 
 # usage: ex <file> 
