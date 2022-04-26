@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+import requests
+import json
+from datetime import date
+
+url="https://data.buienradar.nl/2.0/feed/json"
+weekdays=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
+
+r = requests.get(url)
+json_data = json.loads(r.text)
+forecast = json_data["forecast"]["fivedayforecast"]
+today = date.today().weekday()
+
+print("Day\tminTemp\tmaxTemp\tmaxRain\twindDirection")
+for day in forecast:
+    print(weekdays[today], end="\t")
+    print(day["mintemperature"], end="\t")
+    print(day["maxtemperature"], end="\t")
+    print(day["mmRainMax"], end="\t")
+    print(day["windDirection"], end="\n")
+    today += 1
+
+
