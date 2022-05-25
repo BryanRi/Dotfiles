@@ -1,24 +1,76 @@
 #!/usr/bin/env python
 
-import requests
-import json
-from datetime import date
+# Weather data source: 
+# https://www.buienradar.nl/overbuienradar/gratis-weerdata
+#
+# for colored output: 
+# https://stackabuse.com/how-to-print-colored-text-in-python/
+
+from datetime   import date
+from json       import loads
+from requests   import get
 
 url="https://data.buienradar.nl/2.0/feed/json"
 weekdays=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
 
-r = requests.get(url)
-json_data = json.loads(r.text)
+r = get(url)
+json_data = loads(r.text)
 forecast = json_data["forecast"]["fivedayforecast"]
 today = date.today().weekday()
+weather_today = [station for station in json_data["actual"]["stationmeasurements"] if station["stationname"]== "Meetstation Groenlo-Hupsel"][0]
 
-print("Day\tminTemp\tmaxTemp\tmaxRain\twindDirection")
+def color(temp : float):
+    if temp < -5:
+        return(f"\033[38;5;49m {temp} \033[0;0m")
+    elif temp < 0:
+        c = int (118 - temp)
+        return(f"\033[38;5;44m {temp} \033[0;0m")
+    elif temp < 5:
+        c = int (154 + temp)
+        return(f"\033[38;5;44m {temp} \033[0;0m")
+    if temp < 10:
+        c = int (190 - 5 + temp)
+        return(f"\033[38;5;48m {temp} \033[0;0m")
+    elif temp < 15:
+        c = int (231 + 5 - temp)
+        return(f"\033[38;5;{c}m {temp} \033[0;0m")
+    elif temp < 20:
+        c = int (224 + 10 - temp)
+        return(f"\033[38;5;{c}m {temp} \033[0;0m")
+    elif temp < 25:
+        c = int (218 + 15 - temp)
+        return(f"\033[38;5;{c}m {temp} \033[0;0m")
+    elif temp < 30:
+        c = int (212 + 20 - temp)
+        return(f"\033[38;5;{c}m {temp} \033[0;0m")
+    elif temp < 35:
+        c = int (206 + 25 - temp)
+        return(f"\033[38;5;{c}m {temp} \033[0;0m")
+    else:
+        c = int (max(196, 198 + 35 - temp))
+        return(f"\033[38;5;{c}m {temp} \033[0;0m")
+
+print(f"Weather today {weekdays[today]}:")
+print(weather_today["weatherdescription"])
+print(f"Temp: {color(weather_today['temperature'])}", end="\t")  # type float
+print(f"Wind direction: {weather_today['winddirection']}")
+
+print("\nFive day forecast:\nDay\tminTemp\tmaxTemp\tmaxRain\twindDirection")
 for day in forecast:
-    print(weekdays[today], end="\t")
-    print(day["mintemperature"], end="\t")
-    print(day["maxtemperature"], end="\t")
-    print(day["mmRainMax"], end="\t")
-    print(day["windDirection"], end="\n")
     today += 1
+    print(weekdays[today%7], end="\t")
+    print(color(day["mintemperatureMin"]), end="\t")  # type float
+    print(color(day["maxtemperatureMax"]), end="\t")  # type float
+    print(day["mmRainMax"], end="\t")
+    print(day["windDirection"])
 
+def colors_256(color_):
+    num1 = str(color_)
+    num2 = str(color_).ljust(3, ' ')
+    if color_ % 16 == 0:
+        return(f"\033[38;5;{num1}m {num2} \033[0;0m\n")
+    else:
+        return(f"\033[38;5;{num1}m {num2} \033[0;0m")
 
+#print("\nThe 256 colors scheme is:")
+#print(' '.join([colors_256(x) for x in range(256)]))
