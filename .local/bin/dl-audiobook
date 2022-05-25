@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# script that downloads all files of an audiobook from https://goldenaudiobooks.com/
+
+[ $# -ne 1 ] && echo "Usage: 'goldenaudiobooks url'"
+
+curl -sS "$1" | awk '/https...ipaudio/ {gsub("src=","",$11); print $11}' | xargs -I {} wget -bq {}
+
+authorTitle=$(echo $1 | cut -d / -f 4 | sed 's/audiobook//')
+rename 's/mp3.*/\.mp3/' *mp3*   # remove the weird file name ending
+rename 's/^/$authorTitle/' *mp3 # add the author name and book title to the file
