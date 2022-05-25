@@ -1,3 +1,5 @@
+# script to move the location of ~/.python_history
+
 # sources: 
 # https://bugs.python.org/msg318437
 # https://docs.python.org/3/library/readline.html?highlight=readline#example
