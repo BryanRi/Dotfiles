@@ -1,0 +1,45 @@
+" "
+"---Audio"
+https://escapepod.org/feed/podcast/ "Audiobooks" "Podcast"
+https://feeds.megaphone.fm/darknetdiaries "CybSec" "Podcast"
+https://notrelated.xyz/rss "LS" "Podcast"
+https://risky.biz/feeds/risky-business-news/ "CybSec" "Podcast"
+
+" "
+"---Blog"
+https://blog.iota.org/rss/ "Iota"
+https://www.schneier.com/feed/atom/ "CybSec"
+
+" "
+"---Video"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg "~DistroTube (YouTube)" "Linux"
+https://www.youtube.com/feeds/videos.xml?channel_id=UClxDa0qkOqxIguokXPhnuOA "~Iota Foundation (Youtube)" "Iota"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCVeW9qkBjo3zosnqUbG7CFw "~John Hammond (Youtube)" "CybSec"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA "~Luke Smith (YouTube)" "LS"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCa6eh7gCkpPo5XXUDfygQQA "~IppSec (Youtube)" "CybSec"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC0uTPqBCFIpZxlz_Lv1tk_g "~Protesilaos Stavrou (Youtube)" "Emacs"
+
+" "
+"---Software"
+https://github.com/atlas-engineer/nyxt/releases.atom "~Nyxt releases" "Tech"
+https://suckless.org/atom.xml "Tech"
+
+" "
+"---Linux-OS-news"
+https://www.archlinux.org/feeds/news/ "Linux"
+https://artixlinux.org/feed.php "Linux"
+
+" "
+"---Tech News"
+https://feeds.feedburner.com/TheHackersNews "CybSec"
+https://www.ru.nl/dis/vm/news-digital-security/?rss=true "CybSec" "Academia"
+
+" "
+"---General News"
+http://feeds.nos.nl/nosnieuwsalgemeen "General news"
+
+" "
+"---Other"
+https://feeds.aivd.nl/nieuws.rss
+https://landchad.net/rss.xml "LS"
+https://lukesmith.xyz/rss.xml "LS"
