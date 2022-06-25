@@ -5,14 +5,16 @@ alias webgoat='java -jar ~/Downloads/webgoat-server-8.2.2.jar'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ru='cd /media/br/ru'
-alias fp='cd /media/br/ru/fp/'
 alias .d='cd $HOME/Desktop/'
 alias .dl='cd $HOME/Downloads/'
+alias .c='cd $HOME/.config/'
+alias .b='cd $HOME/.local/bin'
 
 # Edit config files
 alias ,b='vim $HOME/.config/bash/bashrc'
 alias ,ba='vim $HOME/.config/bash/bash_aliases'
 alias ,awm='vim $HOME/.config/awesome/rc.lua'
+alias ,v='vim $HOME/.config/vim/vimrc'
 
 # system
 alias ssn='shutdown now'
@@ -98,6 +100,7 @@ alias bc='bc -q'
 
 # Weather report
 alias weather='curl wttr.in/'
+alias radar='mpv --loop=inf "https://image.buienradar.nl/2.0/image/animation/RadarMapRainWebMercatorNL?width=256&height=256&renderBackground=True&renderBranding=True&renderText=True"'
 
 # wget move wget-hsts file out of $HOME 
 alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
