@@ -1,3 +1,4 @@
+
 # ~/.profile: executed by the command interpreter for login shells.
 # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
 # exists.
@@ -19,14 +20,42 @@ if [ -n "$BASH_VERSION" ]; then
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH=$PATH":$HOME/bin"
-fi
+[ -d "$HOME/bin" ] && PATH=$PATH":$HOME/bin"
+[ -d "$HOME/.local/bin" ] && PATH="$PATH:$HOME/.local/bin"
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
+
+### EXPORTS
+# Personal
+export BROWSER='brave-browser'
+export TERMINAL='alacritty'
+export EDITOR='vim'
+export SHELL='/bin/fish'
+export THEME='Dark'
+export HOME='/home/br'
+export XDG_CONFIG_HOME='$HOME/.config'
+export XDG_CACHE_HOME='$HOME/.cache'
+# Other
+export EXA_COLORS='da=37:di=36'
+export HISTCONTROL=ignoredups:erasedups           # no duplicate entries
+export TERM='xterm-256color'                      # getting proper colors 
+# Set the XDG base directories
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+# Moving config files from $HOME to $XDG_CONFIG_HOME
+export CABAL_CONFIG="$XDG_CONFIG_HOME/cabal/config"
+export CABAL_DIR="$XDG_CACHE_HOME/cabal"
+export GTK_RC_FILES="$XDG_CONFIG_HOME/gtk-1.0/gtkrc-1.0"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
+export HISTFILE="$XDG_CONFIG_HOME/bash/history"
+export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
+export PYTHONSTARTUP="$HOME/.local/bin/PYTHONSTARTUP"         # to move .python_history
+export VIMINIT="source $XDG_CONFIG_HOME/vim/vimrc"
+export MANPAGER='/bin/bash -c "vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
+export MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"
+export SUDO_ASKPASS="$HOME/.local/bin/dmenu-askpass"
+#export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+#export XAUTHORITY="$XDG_CONFIG_HOME/X11/Xauthority"  # could break some DM's (including gdm)
 
 #kill the bluetooth on start up 
 rfkill block bluetooth

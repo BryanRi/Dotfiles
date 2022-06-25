@@ -11,28 +11,6 @@
 [ -f "$HOME/.bash_aliases" ] && . "$HOME/.bash_aliases"
 [ -f "$XDG_CONFIG_HOME/bash/bash_aliases" ] && . "$XDG_CONFIG_HOME/bash/bash_aliases"
 
-### EXPORTS
-export EXA_COLORS='da=37:di=36'
-export HISTCONTROL=ignoredups:erasedups           # no duplicate entries
-export TERM='xterm-256color'                      # getting proper colors 
-# set the XDG base directories
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-# moving config files from $HOME to $XDG_CONFIG_HOME
-export CABAL_CONFIG="$XDG_CONFIG_HOME/cabal/config"
-export CABAL_DIR="$XDG_CACHE_HOME/cabal"
-export GTK_RC_FILES="$XDG_CONFIG_HOME/gtk-1.0/gtkrc-1.0"
-export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
-export HISTFILE="$XDG_CONFIG_HOME/bash/history"
-export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
-export PYTHONSTARTUP=".local/bin/PYTHONSTARTUP"         # to move .python_history
-export VIMINIT="source $XDG_CONFIG_HOME/vim/vimrc"
-export WGETRC="$XDG_CONFIG_HOME/wgetrc"
-export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"  # could break some DM's
-# "vim" as manpager
-export MANPAGER='/bin/bash -c "vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
-
 ### For setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
 HISTFILESIZE=2000
@@ -46,12 +24,9 @@ set -o vi
 PS1='\e[0;36m\w\e[0m\n\e[0;33m[\u@\h]\e[m\e[0;36m\$\e[0m '
 
 ### SHOPT 
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-#shopt -s globstar
-
+shopt -s globstar   # recursive pathname expansion
 shopt -s autocd     # change to named directory 
-shopt -s cdspell   # autocorrects cd misspellings 
+shopt -s cdspell    # autocorrects cd misspellings 
 shopt -s cmdhist    # save multi-line commands in history as single line 
 #shopt -s dotglob 
 shopt -s histappend     # do not overwrite history 
