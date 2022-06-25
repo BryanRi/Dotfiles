@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Simple script for prompting the user to enter the users login password. This
+# is usefull when a script is run from a non-interactive shell and contains
+# 'sudo -A'. This requires the environment variable SUDO_ASKPASS to point to
+# this script i.e.
+# export SUDO_ASKPASS="$HOME/.local/bin/dmenu-askpass"
+
+<&- dmenu -P -p "$1"

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# TODO:
+#  - Use dmenu to ask for music dir
+
+genre=$(find "$HOME"/Desktop/music2021/ -type d | dmenu -i -p "Which genre to play?") || exit 1
+
+find "${genre}" -name '*.mp3' | shuf | xargs -I {} mpv '{}' &

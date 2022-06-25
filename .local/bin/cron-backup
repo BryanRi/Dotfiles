@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Create a backup of certain directories on my machine and store it on a usb if
+# it is connected else $HOME/.backups.
+#
+# Add as a cronjob to automattically make the backup:
+# 30 12 * * 0 /usr/local/bin/backup
+
+DATE=$(date +%Y%m%d-%M)
+
+if [ -d "/media/br/backups" ]; then
+    target="/media/br/backups/backup-${DATE}.tar.gz"
+else
+    [ ! -d "$HOME/.backups" ] && mkdir -p "$HOME/.backups"
+    target="$HOME/.backups/backup-${DATE}.tar.gz"
+fi
+notify-send -t 5000 "Creating; ${target}"
+
+tar czf "${target}" \
+    "$HOME/Desktop" \
+    "$HOME/Downloads" \
+    "$HOME/Pictures" \
+    "$HOME/.config/BraveSoftware/Brave-Browser/Default/Bookmarks"
+    #"/var/spool/cron/crontabs/br"  # requires root rights

@@ -1,0 +1,50 @@
+#!/bin/sh
+
+# Dependencies:
+# - scrot
+# - dmenu
+
+# TODO:
+# - testing
+# - move to the specified directory
+# - give picture the specified name (check for overwritting existing file)
+# - test for existence of $dir/$filename
+# - change file name for selection and active window
+
+DEFAULT_NAME="Scrot default"
+DEFAULT_DIR="$HOME/Pictures/shots"
+[ ! -d "$DEFAULT_DIR" ] && mkdir -p "$DEFAULT_DIR"
+
+options='Selection\nFullscreen\nActive Window'
+choice=$(echo "$options" | dmenu -i -p 'Screenshot options:') || exit 1
+filename=$(echo "$DEFAULT_NAME" | dmenu -i -p 'Enter file name (no extension):') || "$DEFAULT_NAME"
+dir=$(du '/media' "$HOME/Pictures" | tac - | cut -f 2 | dmenu -i -p 'Safe Picture in:') || "$DEFAULT_DIR"
+
+if [ ! -d "$dir" ]; then
+    mkdiryn=$(printf "No\\nYes" | dmenu -i -p "$dir does not exist. Create it?") || exit 1
+    [ "$mkdiryn" = "Yes" ] && (mkdir -p "$dir" || sudo -A mkdir -p "$dir")
+    [ "$mkdiryn" = "No" ] && dir="$DEFAULT_DIR"
+fi
+
+# test for existence of $dir/$filename
+
+case "$choice" in
+    'Fullscreen')
+        dim=$(xwininfo -root | grep geometry | grep -oP '\d+x\d+')
+        w=$(echo "$dim" | cut -d x -f 1)
+        h=$(echo "$dim" | cut -d x -f 2)
+        # shellcheck disable=SC2016,SC2086
+        if [ "$filename" = "$DEFAULT_NAME" ]; then
+            scrot -a 0,0,$w,$h -e 'mv $f $$HOME/Pictures/shots'
+        else
+            scrot "${filename}.png" -a 0,0,$w,$h -e 'mv $f $$HOME/Pictures/shots' 
+        fi ;;
+    'Selection')
+        # shellcheck disable=SC2016
+        scrot -se 'mv $f $$HOME/Pictures/shots' ;;
+    'Active Window')
+        # shellcheck disable=SC2016
+        scrot -ue 'mv $f $$HOME/Pictures/shots' ;;
+    *)
+        >&2 echo 'Wrong option supplied' && exit 1 ;;
+esac

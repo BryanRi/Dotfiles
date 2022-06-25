@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# This script requires that your programs set the theme based on the THEME env
+# variable. Once toggled only new terminals will have the new theme.
+
+light="set -x THEME Light"
+dark="set -x THEME Dark"
+path="$XDG_CONFIG_HOME/fish/theme.env"
+if [ "$THEME" != "Dark" ]; then 
+    echo "$dark" > "$path" && echo "The theme is now dark."
+else
+    echo "$light" > "$path" && echo "The theme is now light."
+fi
+
+cd "$XDG_CONFIG_HOME/alacritty/" || exit 1
+mv alacritty.yml temp
+mv toggle-alacritty.yml alacritty.yml
+mv temp toggle-alacritty.yml

@@ -1,0 +1,81 @@
+#!/bin/sh
+
+# Script for mounting and unmounting devices.
+#
+# Dependancies:
+# - dmenu
+# - dmenu-askpass (personal script)
+
+# TODO:
+# - Make the notifications prettier. (https://askubuntu.com/questions/598601/how-to-customize-the-font-style-in-notify-send)
+# - Clean up script
+# - Show notifications. (https://stackoverflow.com/questions/46777581/notify-send-from-within-a-bash-script)
+
+notifyPP() {
+    # usage: notifyPP "string to be pretty printed" "['SUCCESS' | 'ERROR']"
+    body="<span font='14px'><b>$1</b></span>" 
+    case "$2" in
+        "ERROR") notify-send --urgency=critical -t 4000 "$0:" "${body}" >/dev/null 2>&1 ;;
+        *) notify-send -t 4000 "$0:" "${body}" >/dev/null 2>&1 ;;
+    esac
+}
+
+case "$1" in
+    "-a"|"--all")
+        # Mount all connected deviced that are in /etc/fstab
+        msg="$(sudo -A mount --al 2>&1)"
+        if [ $? = 0 ];
+        then notifyPP "Successfully mounted all devices." "SUCCESS"
+        else notifyPP "${msg}" "ERROR"
+        fi ;;
+
+    "-m"|"--mount")
+        # Mounting
+        dev=$(lsblk -e 7,259 \
+                | grep "part \$" \
+                | cut -d \  -f 1 \
+                | tr -d '└─' \
+                | dmenu -i -p "Mounting which device?") \
+            || exit 1
+
+        dir=$(find /media -maxdepth 1 -type d  | dmenu -i -p "Where to mount?") || exit 1 
+        if [ ! -d "$dir" ]; then 
+            noyes=$(printf "No\nYes" | dmenu -i -p "${dir} does not exist, create it?") || exit 1
+            [ "$noyes" = "No" ] && exit 2
+            mkdir -p "/media/$dir"
+        fi
+
+        msg="$(sudo -A mount -o uid=1000,fmask=113,dmask=002 "/dev/${dev}" "$dir" 2>&1)"
+        if [ $? = 0 ]; 
+        then notifyPP "Successfully mounted device: /dev/${dev}." "SUCCESS"
+        else notifyPP "${msg}" "ERROR"
+        fi ;;
+
+    "-u"|"--umount")
+        # Unmounting
+        dev=$(lsblk -e 7,259 -n \
+                | grep -ve '/$' -e '/boot' -e 'part $' -e 'disk' \
+                | cut -d \  -f 1 \
+                | tr -d '└─' \
+                | dmenu -i -p "Unmounting which device?") \
+            || exit 1
+
+        msg="$(sudo -A umount "/dev/${dev}" 2>&1)"
+        if [ $? = 0 ]; 
+        then notifyPP "Successfully unmounted device: /dev/${dev}" "SUCCESS"
+        else notifyPP "${msg}" "ERROR"
+        fi ;;
+
+    *)
+        cat << EOF && exit 1 ;;
+Usage: $0 [-m | -u]
+    -a, --all
+        Mount all connected devices as specified in /etc/fstab
+    -h
+        Display help text and exit.
+    -m, --mount
+        Mounting a usb device chosen with dmenu.
+    -u, --umount
+        Unmounting a usb device chosen with dmenu.
+EOF
+esac
