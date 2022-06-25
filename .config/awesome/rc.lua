@@ -1,3 +1,4 @@
+-- change line 653 onwards
 -- If LuaRocks is installed, make sure that packages installed through it are
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
@@ -82,6 +83,7 @@ beautiful.init("/home/br/.config/awesome/themes/xresources/theme.lua")
 -- This is used later as the default terminal and editor to run.
 --terminal = "x-terminal-emulator"
 terminal = "alacritty"
+terminal1 = "st"
 browser_0 = "brave-browser"
 browser_1 = "nyxt"
 editor = os.getenv("EDITOR") or "vim"
@@ -311,39 +313,71 @@ root.buttons(gears.table.join(
 -- {{{ Key bindings
 globalkeys = gears.table.join(
 	-- Volume key
-	awful.key({}, "XF86AudioRaiseVolume", function () 
-		awful.util.spawn("amixer -D pulse sset Master 5%+", false) 
-		volume_widget:emit_signal("timeout") 
-		end),
-	awful.key({}, "XF86AudioLowerVolume", function () 
-		awful.spawn.with_line_callback(		--idea to make it update at keypress (not working)
-		--https://stackoverflow.com/questions/62251245/awesomewm-update-watch-widget-on-keypress
-			"amixer -D pulse sset Master 5%-", {
-			exit = function () 
-				awful.widget.watch("volume_widget", 0):emit_signal("timeout") 
-			end})
-		end),
-	awful.key({}, "XF86AudioMute", function () 
-		awful.util.spawn("amixer -D pulse sset Master toggle", false) end),
+	awful.key({}, "XF86AudioRaiseVolume", function ()
+	    awful.spawn.with_line_callback("amixer -D pulse sset Master 5%+", {
+            exit = function ()
+                update_volume(volume_widget)
+            end
+        }) end
+    ),
+	awful.key({}, "XF86AudioLowerVolume", function ()
+	    awful.spawn.with_line_callback("amixer -D pulse sset Master 5%-", {
+            exit = function ()
+                update_volume(volume_widget)
+            end
+        }) end
+    ),
+	awful.key({}, "XF86AudioMute", function ()
+	    awful.spawn.with_line_callback("amixer -D pulse sset Master toggle", {
+            exit = function ()
+                update_volume(volume_widget)
+            end
+        }) end
+    ),
 	-- make sure the user is able to execute the chbrightness command with
     -- root rights without entering the root password by editing the sudoers file
     -- add the line:
     -- [user name] ALL=NOPASSWD:/usr/bin/chbrightness
-	awful.key({ }, "XF86MonBrightnessDown", function ()
-		awful.util.spawn("sudo chbrightness -", false) end),
-    awful.key({ }, "XF86MonBrightnessUp", function ()
-		awful.util.spawn("sudo chbrightness +", false) end), 
+--	awful.key({ }, "XF86MonBrightnessDown", function ()
+--		awful.util.spawn("sudo chbrightness -", false) end),
+--    awful.key({ }, "XF86MonBrightnessUp", function ()
+--		awful.util.spawn("sudo chbrightness +", false) end), 
+
+	-- Applications
+--    awful.key({ modkey,           }, "c", function () awful.spawn(terminal) end,
+--              {description = "open a terminal", group = "launcher"}),
+--    awful.key({ modkey,           }, "f", function () awful.spawn(terminal1) end,
+--              {description = "open a terminal", group = "launcher"}),
+--	awful.key({ modkey			}, "b",	function () awful.util.spawn(browser_0)		end,
+--			  {description = "launch " .. browser_0 .. " browser", group = "applications"}),
+--	awful.key({ modkey, "Shift"	}, "b",	function () awful.util.spawn(browser_1)		end,
+--			  {description = "launch " .. browser_1 .. " browser", group = "applications"}),
+--	awful.key({ modkey			}, "t",	function () awful.util.spawn("emacs")			end,
+--			  {description = "launch emacs" ,group = "applications"}),
+--	awful.key({ modkey			}, "l",	function () 
+--						awful.spawn.with_shell("GTK_THEME=Adwaita:dark nautilus")		end,
+--			  {description = "launch nautilus with dark mode" ,group = "applications"}),
+
+    -- Prompt
+--    awful.key({ modkey			}, "r", function () 
+--		awful.spawn.with_shell("rofi -show run") end,
+--              {description = "run rofi", group = "launcher"}),
+--	awful.key({ modkey, "Shift"	}, "r", function () 
+--		awful.spawn.with_shell("rofi -show run -theme ~/.config/rofi/themes/center.rasi") end,
+--              {description = "run rofi center theme", group = "launcher"}),
+
+
 	-- Awesome keys
-    awful.key({ modkey, "Shift"   }, "x",     lock_screen, 
-              {description="lock screen", group="awesome"}),
+--    awful.key({ modkey, "Shift"   }, "x",     lock_screen, 
+--              {description="lock screen", group="awesome"}),
 	awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
-    awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
-              {description = "view previous", group = "tag"}),
-    awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
-              {description = "view next", group = "tag"}),
-    awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
-              {description = "go back", group = "tag"}),
+--    awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
+--              {description = "view previous", group = "tag"}),
+--    awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
+--              {description = "view next", group = "tag"}),
+--    awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
+--              {description = "go back", group = "tag"}),
 	-- change focus
     awful.key({ modkey,           }, "n",
         function ()
@@ -371,18 +405,16 @@ globalkeys = gears.table.join(
               {description = "focus the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
-    awful.key({ modkey,           }, "Tab",
-        function ()
-            awful.client.focus.history.previous()
-            if client.focus then
-                client.focus:raise()
-            end
-        end,
-        {description = "go back", group = "client"}),
+--    awful.key({ modkey,           }, "Tab",
+--        function ()
+--            awful.client.focus.history.previous()
+--            if client.focus then
+--                client.focus:raise()
+--            end
+--        end,
+--        {description = "go back", group = "client"}),
 
     -- Standard program
-    awful.key({ modkey,           }, "c", function () awful.spawn(terminal) end,
-              {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
@@ -417,26 +449,6 @@ globalkeys = gears.table.join(
               end,
               {description = "restore minimized", group = "client"}),
 
-	-- Applications
-	awful.key({ modkey			}, "b",	function () awful.util.spawn(browser_0)		end,
-			  {description = "launch " .. browser_0 .. " browser", group = "applications"}),
-	awful.key({ modkey, "Shift"	}, "b",	function () awful.util.spawn(browser_1)		end,
-			  {description = "launch " .. browser_1 .. " browser", group = "applications"}),
-	awful.key({ modkey			}, "t",	function () awful.util.spawn("emacs")			end,
-			  {description = "launch emacs" ,group = "applications"}),
-	awful.key({ modkey			}, "l",	function () 
-						awful.spawn.with_shell("GTK_THEME=Adwaita:dark nautilus")		end,
-			  {description = "launch nautilus with dark mode" ,group = "applications"}),
-
-
-    -- Prompt
-    awful.key({ modkey			}, "r", function () 
-		awful.spawn.with_shell("rofi -show run") end,
-              {description = "run rofi", group = "launcher"}),
-	awful.key({ modkey, "Shift"	}, "r", function () 
-		awful.spawn.with_shell("rofi -show run -theme ~/.config/rofi/themes/center.rasi") end,
-              {description = "run rofi center theme", group = "launcher"}),
-
     awful.key({ modkey }, "x",
               function ()
                   awful.prompt.run {
@@ -446,10 +458,10 @@ globalkeys = gears.table.join(
                     history_path = awful.util.get_cache_dir() .. "/history_eval"
                   }
               end,
-              {description = "lua execute prompt", group = "awesome"}),
+              {description = "lua execute prompt", group = "awesome"})
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"})
+--    awful.key({ modkey }, "p", function() menubar.show() end,
+--              {description = "show the menubar", group = "launcher"})
 )
 
 clientkeys = gears.table.join(
@@ -639,45 +651,45 @@ client.connect_signal("manage", function (c)
     end
 end)
 
--- Add a titlebar if titlebars_enabled is set to true in the rules.
-client.connect_signal("request::titlebars", function(c)
-    -- buttons for the titlebar
-    local buttons = gears.table.join(
-        awful.button({ }, 1, function()
-            c:emit_signal("request::activate", "titlebar", {raise = true})
-            awful.mouse.client.move(c)
-        end),
-        awful.button({ }, 3, function()
-            c:emit_signal("request::activate", "titlebar", {raise = true})
-            awful.mouse.client.resize(c)
-        end)
-    )
-
-    awful.titlebar(c) : setup {
-        { -- Left
-            awful.titlebar.widget.iconwidget(c),
-            buttons = buttons,
-            layout  = wibox.layout.fixed.horizontal
-        },
-        { -- Middle
-            { -- Title
-                align  = "center",
-                widget = awful.titlebar.widget.titlewidget(c)
-            },
-            buttons = buttons,
-            layout  = wibox.layout.flex.horizontal
-        },
-        { -- Right
-            awful.titlebar.widget.floatingbutton (c),
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.stickybutton   (c),
-            awful.titlebar.widget.ontopbutton    (c),
-            awful.titlebar.widget.closebutton    (c),
-            layout = wibox.layout.fixed.horizontal()
-        },
-        layout = wibox.layout.align.horizontal
-    }
-end)
+---- Add a titlebar if titlebars_enabled is set to true in the rules.
+--client.connect_signal("request::titlebars", function(c)
+--    -- buttons for the titlebar
+--    local buttons = gears.table.join(
+--        awful.button({ }, 1, function()
+--            c:emit_signal("request::activate", "titlebar", {raise = true})
+--            awful.mouse.client.move(c)
+--        end),
+--        awful.button({ }, 3, function()
+--            c:emit_signal("request::activate", "titlebar", {raise = true})
+--            awful.mouse.client.resize(c)
+--        end)
+--    )
+--
+--    awful.titlebar(c) : setup {
+--        { -- Left
+--            awful.titlebar.widget.iconwidget(c),
+--            buttons = buttons,
+--            layout  = wibox.layout.fixed.horizontal
+--        },
+--        { -- Middle
+--            { -- Title
+--                align  = "center",
+--                widget = awful.titlebar.widget.titlewidget(c)
+--            },
+--            buttons = buttons,
+--            layout  = wibox.layout.flex.horizontal
+--        },
+--        { -- Right
+--            awful.titlebar.widget.floatingbutton (c),
+--            awful.titlebar.widget.maximizedbutton(c),
+--            awful.titlebar.widget.stickybutton   (c),
+--            awful.titlebar.widget.ontopbutton    (c),
+--            awful.titlebar.widget.closebutton    (c),
+--            layout = wibox.layout.fixed.horizontal()
+--        },
+--        layout = wibox.layout.align.horizontal
+--    }
+--end)
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
@@ -698,6 +710,7 @@ autorunApps =
    --"activitywatch/aw-qt",
    "sudo chbrightness 4000",
    "redshift -c ~/.config/redshift.conf", --turns on nightlight
+   "sxhkd",
    "disable-xdg-screensaver", -- disable screensaver of the root window, find root window with: $ xwininfo -root
    "xinput set-prop 'DELL098F:00 04F3:311C Touchpad' 'libinput Tapping Enabled' 1", -- find the name of the touchpad device with 'xinput list' and 'xinput list-props' for all properties
    "xinput set-prop 'DELL098F:00 04F3:311C Touchpad' 'libinput Accel Speed' .5" 
