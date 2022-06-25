@@ -12,9 +12,9 @@ There are also lots of usefull scripts in =.local/bin=.
 
 * Other configs
 I also use some Suckless software that each have their own dedicated repo.
-- [[https://github.com/BryanRi/dwm][=dwm=]] --- Window manager
-- [[https://github.com/BryanRi/dmenu][=dmenu=]] --- Dynamic menu
-- [[https://github.com/BryanRi/st][=st=]] --- Terminal
+- [[https://github.com/BryanRi/dwm][dwm]] --- Window manager
+- [[https://github.com/BryanRi/dmenu][dmenu]] --- Dynamic menu
+- [[https://github.com/BryanRi/st][st]] --- Terminal
 
 * Dotfile management
 I manage my dotfiles using the git bare repo method, discribed in this [[https://www.atlassian.com/git/tutorials/dotfiles][article]].
