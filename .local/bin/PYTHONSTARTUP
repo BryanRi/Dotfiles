@@ -1,3 +1,5 @@
+#!/bin/python3
+
 # script to move the location of ~/.python_history
 
 # sources: 
