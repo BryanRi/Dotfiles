@@ -1,0 +1,82 @@
+### webgoat
+abbr -a webgoat 'java -jar ~/Downloads/webgoat-server-8.2.2.jar'
+
+### Quickly change directories
+abbr -a .. 'cd ..'
+abbr -a ... 'cd ../..'
+abbr -a ru 'cd /media/br/ru'
+abbr -a .d 'cd $HOME/Desktop/'
+abbr -a .dl 'cd $HOME/Downloads/'
+abbr -a .c 'cd $HOME/.config/'
+abbr -a .b 'cd $HOME/.local/bin'
+
+### Edit config files
+abbr -a ,b 'vim $HOME/.config/bash/bashrc'
+abbr -a ,ba 'vim $HOME/.config/bash/bash_aliases'
+abbr -a ,awm 'vim $HOME/.config/awesome/rc.lua'
+abbr -a ,v 'vim $HOME/.config/vim/vimrc'
+abbr -a ,f 'vim $HOME/.config/fish/config.fish'
+abbr -a ,fa 'vim $HOME/.config/fish/fish_aliases'
+abbr -a ,fb 'vim $HOME/.config/fish/fish_abbreviations'
+abbr -a ,fv 'vim $HOME/.config/fish/fish_variables'
+abbr -a ,s 'vim .local/suckless/st/config.def.h'
+abbr -a ,d 'vim .local/suckless/dwm/config.def.h'
+
+### system
+abbr -a ssn 'shutdown now'
+abbr -a wifioff 'nmcli radio wifi off'
+abbr -a wifion 'nmcli radio wifi on'
+
+### mount usb, writable by non-root users
+#alias mounto sudo mount -o gid=users,fmask=113,dmask=002
+abbr -a mtu 'sudo mount -o uid=1000,fmask=113,dmask=002 /dev/sda'
+abbr -a mtt 'sudo umount /dev/sda'
+
+### apt
+abbr -a a 'sudo apt'
+abbr -a ati 'sudo apt install'
+abbr -a atr 'sudo apt remove'
+abbr -a atu 'sudo apt update'
+abbr -a atuu 'sudo apt update && sudo apt upgrade'
+abbr -a atar 'sudo apt autoremove'
+
+### pacman and yay
+abbr -a pacs 'doas pacman -S'
+abbr -a pacsyu 'doas pacman -Syyu'                    # update only standard pkgs
+abbr -a yaysua 'yay -Sua --noconfirm'                 # update only AUR pkgs (yay)
+abbr -a yaysyu 'yay -Syu --noconfirm'                 # update standard pkgs and AUR pkgs (yay)
+abbr -a parsua 'paru -Sua --noconfirm'                # update only AUR pkgs (paru)
+abbr -a parsyu 'paru -Syu --noconfirm'                # update standard pkgs and AUR pkgs (paru)
+abbr -a unlock 'doas rm /var/lib/pacman/db.lck'       # remove pacman lock
+abbr -a cleanup 'doas pacman -Rns \(pacman -Qtdq\)'   # remove orphaned packages
+
+### commands with extra flags
+abbr -a mvi 'mv -i'
+abbr -a cpi 'cp -i'
+abbr -a md 'mkdir -p'
+
+### xclip copy and paste
+abbr -a xc 'xclip -selection c'
+abbr -a xv 'xclip -selection c -o'
+## clear clipboard
+abbr -a xcc 'xclip -sel clip < /dev/null'
+
+### Programming
+abbr -a pip 'pip3'
+abbr -a note '~/anaconda3/bin/jupyter-notebook'
+
+### Download an audio file from youtube with youtube-dl
+abbr -a yt '-dl-audio youtube-dl -x --audio-format mp3'
+
+### Git
+abbr -a ta 'git add'
+abbr -a taa 'git add .'
+abbr -a tb 'git branch'
+abbr -a tco 'git checkout'
+abbr -a tc "git commit -m '"
+abbr -a tcache 'git config --global credential.helper cache'
+abbr -a tcon 'git config --global user.name "Your_Name" && git config --global user.email "Your-Email"'
+abbr -a tcl 'git clone'
+abbr -a tp 'git push'
+abbr -a tpl 'git pull'
+abbr -a ts 'git status'

@@ -1,27 +1,41 @@
 ### ALIASES ###
-# navigation
+### navigation
 alias ..='cd ..'
 alias ...='cd ../..'
 
-# Changing "ls" to "exa"
+### Mounting and unmounting
+alias mta='sudo mount -a'
+alias mto='sudo umount /dev/disk/by-uuid/1653-E4AF'
+
+### Changing "ls" to "exa"
 alias ll='exa -al --color=always --group-directories-first' # my preferred listing
 
-# pacman and yay
-alias pacsyu='sudo pacman -Syu'                  # update only standard pkgs
-alias pacsyyu='sudo pacman -Syyu'                # Refresh pkglist & update standard pkgs
-alias yaysua='yay -Sua --noconfirm'              # update only AUR pkgs (yay)
-alias yaysyu='yay -Syu --noconfirm'              # update standard pkgs and AUR pkgs (yay)
-alias parsua='paru -Sua --noconfirm'             # update only AUR pkgs (paru)
-alias parsyu='paru -Syu --noconfirm'             # update standard pkgs and AUR pkgs (paru)
-alias cleanup='sudo pacman -Rns (pacman -Qtdq)' # remove orphaned packages
+### Managing dotfiles
+alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dots='dot status'
+alias dota='dot add'
+alias dotau='dot add --update'
+alias dotc='dot commit -m'
+alias dotp='dot push'
 
-# get fastest mirrors
+### get fastest mirrors
 alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
 alias mirrord="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
 alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
 alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
 
-# Colorize grep output (good for log files)
+### Colorize grep output (good for log files)
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
+
+### Weather report
+alias wttr='curl wttr.in/'
+alias radar='mpv --loop=inf "https://image.buienradar.nl/2.0/image/animation/RadarMapRainWebMercatorNL?width=256&height=256&renderBackground=True&renderBranding=True&renderText=True"'
+
+### wget move wget-hsts file out of $HOME
+alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
+
+### Commands with extra flags
+alias bc='bc -q'    # Calculator without welcome
+alias lsblk='lsblk -e 7'
