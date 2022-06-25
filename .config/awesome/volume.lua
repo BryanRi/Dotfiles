@@ -18,10 +18,10 @@ function update_volume(widget)
 
    if string.find(status, "on", 1, true) then
        -- For the volume numbers
-       volume = volume .. "%"
+       volume = "🔉" .. volume .. "%"
    else
        -- For the mute button
-       volume = volume .. "M"
+       volume = "🔇" .. volume .. "M"
        
    end
    widget:set_markup(volume)
@@ -29,6 +29,4 @@ end
  
 update_volume(volume_widget)
  
-mytimer = timer({ timeout = 60 }) --change timeout to in/decrease the update interval
-mytimer:connect_signal("timeout", function () update_volume(volume_widget) end)
-mytimer:start()
+-- timer now updates on keypress, see rc.lua (Audio buttons)
