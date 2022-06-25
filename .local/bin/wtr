@@ -21,38 +21,32 @@ weather_today = [station for station in json_data["actual"]["stationmeasurements
 
 def color(temp : float):
     if temp < -5:
-        return(f"\033[38;5;49m {temp} \033[0;0m")
+        return(f"\033[38;5;51m {temp} \033[0;0m")
     elif temp < 0:
-        c = int (118 - temp)
-        return(f"\033[38;5;44m {temp} \033[0;0m")
+        return(f"\033[38;5;123m {temp} \033[0;0m")
     elif temp < 5:
-        c = int (154 + temp)
-        return(f"\033[38;5;44m {temp} \033[0;0m")
+        return(f"\033[38;5;85m {temp} \033[0;0m")
     if temp < 10:
-        c = int (190 - 5 + temp)
-        return(f"\033[38;5;48m {temp} \033[0;0m")
+        return(f"\033[38;5;154m {temp} \033[0;0m")
     elif temp < 15:
-        c = int (231 + 5 - temp)
-        return(f"\033[38;5;{c}m {temp} \033[0;0m")
+        return(f"\033[38;5;220m {temp} \033[0;0m")
     elif temp < 20:
-        c = int (224 + 10 - temp)
-        return(f"\033[38;5;{c}m {temp} \033[0;0m")
+        return(f"\033[38;5;215m {temp} \033[0;0m")
     elif temp < 25:
-        c = int (218 + 15 - temp)
-        return(f"\033[38;5;{c}m {temp} \033[0;0m")
+        return(f"\033[38;5;208m {temp} \033[0;0m")
     elif temp < 30:
-        c = int (212 + 20 - temp)
-        return(f"\033[38;5;{c}m {temp} \033[0;0m")
+        return(f"\033[38;5;202m {temp} \033[0;0m")
     elif temp < 35:
-        c = int (206 + 25 - temp)
-        return(f"\033[38;5;{c}m {temp} \033[0;0m")
+        return(f"\033[38;5;196m {temp} \033[0;0m")
+    elif temp < 40:
+        return(f"\033[38;5;9m {temp} \033[0;0m")
     else:
-        c = int (max(196, 198 + 35 - temp))
-        return(f"\033[38;5;{c}m {temp} \033[0;0m")
+        return(f"\033[38;5;1m {temp} \033[0;0m")
 
 print(f"Weather today {weekdays[today]}:")
 print(weather_today["weatherdescription"])
 print(f"Temp: {color(weather_today['temperature'])}", end="\t")  # type float
+print(f"Precipitation: {weather_today['precipitation']}", end="\t")
 print(f"Wind direction: {weather_today['winddirection']}")
 
 print("\nFive day forecast:\nDay\tminTemp\tmaxTemp\tmaxRain\twindDirection")
