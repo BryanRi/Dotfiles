@@ -2,7 +2,7 @@
 
 """ Move all config files to .config
 " https://vi.stackexchange.com/questions/11879/how-can-put-vimrc-and-viminfo-into-vim-directory
-set viminfo+=n~/vim/viminfo
+set viminfo+=n~/.config/vim/viminfo
 let rtp=&runtimepath
 set runtimepath=~/.config/vim
 let &runtimepath.=','.rtp.',~/.config/vim/after'
