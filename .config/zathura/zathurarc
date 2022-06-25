@@ -63,6 +63,6 @@ set selection-clipboard clipboard
 
 set render-loading "false"
 set scroll-step 50
-unmap f
+# unmap f
 map f toggle_fullscreen
 map [fullscreen] f toggle_fullscreen
