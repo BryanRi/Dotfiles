@@ -1,62 +1,108 @@
 "" ~/.vimrc
 
-"" ================================== move all config files to .config
-"" https://vi.stackexchange.com/questions/11879/how-can-put-vimrc-and-viminfo-into-vim-directory
+""" Move all config files to .config
+" https://vi.stackexchange.com/questions/11879/how-can-put-vimrc-and-viminfo-into-vim-directory
 set viminfo+=n~/vim/viminfo
 let rtp=&runtimepath
 set runtimepath=~/.config/vim
 let &runtimepath.=','.rtp.',~/.config/vim/after'
+let $VIM='~/.config/vim/'
 
-"" ================================== color scheme 
-syntax on
-
-if (has("autocmd"))
-  augroup colorextend
-    autocmd!
-    " Set comment color to a lighter gray for onedark theme
-    " autocmd ColorScheme * call onedark#extend_highlight("Comment", { "fg": { "gui": "#9DA1A9" } })
-    " even lighter grey
-    "autocmd ColorScheme * call onedark#extend_highlight("Comment", { "fg": { "gui": "#ADB1B7" } })
-  augroup END
+""" Plugin manager
+if empty(glob('~/.config/vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.config/vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-"let g:gruvbox_contrast_dark='hard'
-set bg=dark
+
+""" Plugins
+call plug#begin('~/.config/vim/plugged')
+Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline'
+Plug 'ap/vim-css-color'
+call plug#end()
+
+""" Buildin plugins
+filetype plugin on
+packadd! matchit
+
+""" test
+augroup dev
+    autocmd!
+    autocmd BufNewFile,BufRead *vifm* set syntax=vim
+    autocmd BufRead,BufNewFile *.v
+            \ set filetype=coq |
+            \ setlocal softtabstop=2 | 
+            \ setlocal shiftwidth=2
+augroup end
+
+""" Color scheme 
+syntax on
+if $THEME == "Dark"
+    set bg=dark
+else
+    set bg=light
+endif
 colorscheme gruvbox
 
-"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
-"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
-if (empty($TMUX))
-  if (has("nvim"))
+" Fix gruvbox colors by using 24-bit (true-color) mode in Vim/Neovim
+if (has("nvim"))
     "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  endif
-  if (has("termguicolors"))
+endif
+if (has("termguicolors"))
     set termguicolors
-  endif
 endif
 
-"" ================================== statusline 
-"set laststatus=2
-"set statusline=%<%F\ %h%m%r%y   "" leftside (file-path, help-buffer, modified, readonly, file type)
-"set statusline+=%=%-14.(%l,%c%V%)\ %P   "" rightside (lineno, columnno, percentage)
-"highlight StatusLine    ctermfg=7    ctermbg=8      cterm=none
+""" Statusline 
+set laststatus=2
 let g:airline_theme='gruvbox'
+set noshowmode  " remove the '-- INSERT --'
 
-"" ================================== line numbers 
-set relativenumber
-set number
+""" line numbers 
+set relativenumber number
 highlight LineNr guifg=#DDA500
+highlight CursorColumn guibg=#122222
 
-"" ================================== tab width 
+""" Indentation
 set tabstop=4
 set expandtab
 set softtabstop=4
 set shiftwidth=4
-
-"" ================================== search 
-set hlsearch "":noh to undo the current search highlight
-set incsearch
-
-"" ================================== other 
 set smartindent
+
+""" Search 
+set incsearch hlsearch "":noh to undo the current search highlight
+set ignorecase
+set smartcase
+
+""" Other 
 set scrolloff=10
+set splitbelow splitright
+set wildmode=longest,list,full
+
+""" Keybindings
+let mapleader=" "
+
+" Visuals
+nnoremap <leader>h :noh<CR>
+nnoremap <leader>l :set nocursorcolumn<CR>
+nnoremap <leader>L :set cursorcolumn<CR>
+
+" Copy and paste
+noremap <C-c> "+y
+nnoremap <C-p> "+p
+nnoremap Y y$
+
+" Navigation splits
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Resizing splits
+noremap <silent> <C-Left> :vertical resize +3<CR>
+noremap <silent> <C-Right> :vertical resize -3<CR>
+noremap <silent> <C-Up> :resize +3<CR>
+noremap <silent> <C-Down> :resize -3<CR>
+
