@@ -606,7 +606,7 @@ schemes:
 # *SolarizedDark
 # *TomorrowNight
 
-#colors: *SolarizedLight
+colors: *SolarizedLight
 
 #######################################
 ##       END OF COLOR SCHEMES        ##
