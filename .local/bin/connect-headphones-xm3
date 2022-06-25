@@ -1,10 +1,38 @@
-#!/bin/bash
+#!/usr/bin/expect -f
+#
+# https://forum.endeavouros.com/t/how-to-script-bluetoothctl-commands/18225/9
+#
+# requires expect to be installed. On ubuntu:
+# $ sudo apt install expect
 #
 # script to connect to my LE_WH-1000XM3 headphones
 # use 
 # $ bluetoothctl devices 
 # to list the bluetooth devices that have been connected to the pc previously
 
-sudo systemctl start bluetooth
-rfkill unblock bluetooth
-echo -e "connect 38:18:4C:05:C7:A6" | bluetoothctl
+#[ -z $(systemctl status bluetooth | grep '(dead)') ] && sudo systemctl start bluetooth
+#rfkill unblock bluetooth
+#echo -e "connect 38:18:4C:05:C7:A6" | bluetoothctl
+
+set device "38:18:4C:05:C7:A6"
+set controller "04:6C:59:0E:25:71"
+set timeout 60
+
+# not yet done:
+#spawn bluetoothctl
+#expect "Agent registered"
+#send -- "list\r"
+#expect "$controller"
+#send -- "select $controller\r"
+#send -- "remove $device\r"
+#expect "Device has been removed"
+#send -- "scan on\r"
+#expect "$device"
+#send -- "pair $device\r"
+#expect "Pairing successful"
+#send -- "connect $device\r"
+#expect "Connection successful"
+#send -- "trust $device\r"
+#expect "trust succeeded"
+#send -- "exit\r"
+#expect eof
