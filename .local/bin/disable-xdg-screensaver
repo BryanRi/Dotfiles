@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Script to disable the xdg-screensaver
 
@@ -7,4 +7,4 @@ rootwndw=$(xwininfo -root | awk '$1 == "xwininfo:" {print $4}')
 
 # disable the screensaver
 #xdg-screensaver suspend 0x7c8 # $window_id
-xdg-screensaver suspend $rootwndw
+xdg-screensaver suspend "$rootwndw"
