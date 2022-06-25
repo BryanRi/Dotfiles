@@ -1,0 +1,49 @@
+### sxhkd hot keys ###
+
+### XF86 keys ###
+# Find key names with: 
+# $ ls /usr/include/X11/*key* 
+# (Do not include the 'XK_' in the key commands)
+
+#XF86AudioRaiseVolume
+#  amixer -D pulse sset Master 5%+
+#XF86AudioLowerVolume
+#  amixer -D pulse sset Master 5%-
+#XF86AudioMute
+#  amixer -D pulse sset Master toggle
+
+{XF86MonBrightnessUp, XF86MonBrightnessDown}
+  sudo chbrightness {+, -}
+
+super + shift + x
+    slock
+
+### Launch Applications ###
+# Program launcher
+super + r
+    rofi -show run -theme $HOME/.config/rofi/themes/dmenu.rasi
+
+# Terminal
+super + {c, g}
+    {$TERMINAL, st}
+super + y
+    $TERMINAL -e vifm -c "map D <nop>" -c "nmap b t"
+super+w
+    $TERMINAL -e newsboat
+super + a
+    toggle-theme
+
+# dmenu
+super + shift + s
+    $HOME/.local/bin/dmenu-scrot
+super + {slash, question}
+    /usr/local/bin/dmenu-mount {'-m', '-u'}
+
+# GUI
+super + b
+    $BROWSER
+super + t
+    emacs
+super + l
+    GTK_THEME=Adwaita:dark nautilus
+
