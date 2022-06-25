@@ -1,0 +1,20 @@
+* Dotfiles
+This repo is a collection of my dotfiles. They should work on any Unix
+based OS and are used by me on Ubuntu 20.04 LTS. The most note worthy
+configs are:
+- =awesomewm=, --- Window manager
+- =bash=, =fish= --- Shells
+- =(n)vim= --- Editor
+- =vifm= --- File manager
+- =emacs= --- Productivity environment
+- And many other (mostly terminal) programs.
+There are also lots of usefull scripts in =.local/bin=.
+
+* Other configs
+I also use some Suckless software that each have their own dedicated repo.
+- [[https://github.com/BryanRi/dwm][=dwm=]] --- Window manager
+- [[https://github.com/BryanRi/dmenu][=dmenu=]] --- Dynamic menu
+- [[https://github.com/BryanRi/st][=st=]] --- Terminal
+
+* Dotfile management
+I manage my dotfiles using the git bare repo method, discribed in this [[https://www.atlassian.com/git/tutorials/dotfiles][article]].
