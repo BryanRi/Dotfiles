@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 
 # safely removing files by moving them to the trash
 
-if [[ $1 == "/" ]]; then
+if [ "$1" = "/" ]; then
     echo "Don't delete your root directory"
 else
-    mv -i $@ $HOME/.local/share/Trash/files
+    mv -i "$@" "$HOME/.local/share/Trash/files"
 fi
