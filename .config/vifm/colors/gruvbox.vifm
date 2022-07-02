@@ -34,6 +34,8 @@ highlight /^.*\.(zip|gz|bz2|xz|tar|tgz|tbz2|7z|rar|iso|rpm|deb)$/ ctermfg=34
 highlight /^.*\.(pdf)$/ ctermfg=1
 highlight /^.*\.(jpeg|jpg|png)$/ ctermfg=6
 highlight /^.*\.(csv|ods|odt|xlsx|doc)$/ ctermfg=2
+highlight /^.*\.(mkv|mp4)$/ ctermfg=98
+highlight /^.*\.(mp3)$/ ctermfg=91
 
 "Available group-name values:
 "Win		    - color of all windows (views, dialogs, menus) and default color for their content (e.g. regular files in views)
