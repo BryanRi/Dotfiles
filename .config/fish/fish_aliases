@@ -3,6 +3,8 @@
 alias ..='cd ..'
 alias ...='cd ../..'
 
+alias vim='nvim'
+
 ### Mounting and unmounting
 alias mta='sudo mount -a'
 alias mto='sudo umount /dev/disk/by-uuid/1653-E4AF'
