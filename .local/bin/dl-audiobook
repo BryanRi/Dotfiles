@@ -4,8 +4,19 @@
 
 [ $# -ne 1 ] && echo "Usage: 'goldenaudiobooks url'"
 
-curl -sS "$1" | awk '/https...ipaudio/ {gsub("src=","",$11); print $11}' | xargs -I {} wget -bq {}
+#curl -sS "$1" | awk '/https...ipaudio/ {gsub("src=","",$11); print $11}' | xargs -I {} wget -bq {}
+# experiment
+curl -sS "$1" | grep -oP '"https://ipaudio\S*=\d+"' | xargs -I {} wget -bq {} 2>/dev/null 
+# sleep in order to create all files, only then is it possible to rename all of them
+sleep 1
+#urls=$(curl -sS "$1" | grep -oP '"https://ipaudio\S*\d+"' | tr -d '"') 
+#echo -e "$urls" | grep -oP '.*=\d+$' | xargs -I {} wget -bq {} 2>/dev/null && sleep 0.5
+#[ -z "$(ls)" ] && echo -e "$urls" | grep '.*mp3$' | xargs -I {} wget -bq {} 2>/del/null && sleep 0.5
 
-authorTitle=$(echo $1 | cut -d / -f 4 | sed 's/audiobook//')
-rename 's/mp3.*/\.mp3/' *mp3*   # remove the weird file name ending
-rename 's/^/$authorTitle/' *mp3 # add the author name and book title to the file
+if [ -n "$(ls)" ]; then
+    authorTitle=$(echo "$1" | cut -d / -f 4 | sed 's/audiobook//')
+    rename 's/mp3.*/mp3/' -- *mp3*     # remove the weird file name ending
+    rename "s/^/${authorTitle}/" -- *mp3 # add the author name and book title to the file
+else
+    >&2 echo "Error during downloading" 
+fi
