@@ -25,7 +25,7 @@ super + r
 
 # Terminal
 super + {c, g}
-    {$TERMINAL, st}
+    {$TERMINAL, alacritty}
 super + y
     $TERMINAL -e vifm -c "map D <nop>" -c "nmap b t"
 super+w

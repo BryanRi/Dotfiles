@@ -27,8 +27,8 @@ fi
 ### EXPORTS
 # Personal
 export BROWSER='brave-browser'
-export TERMINAL='alacritty'
-export EDITOR='vim'
+export TERMINAL='st'
+export EDITOR='nvim'
 export SHELL='/bin/fish'
 export THEME='Dark'
 export HOME='/home/br'
@@ -45,13 +45,14 @@ export XDG_DATA_HOME="$HOME/.local/share"
 # Moving config files from $HOME to $XDG_CONFIG_HOME
 export CABAL_CONFIG="$XDG_CONFIG_HOME/cabal/config"
 export CABAL_DIR="$XDG_CACHE_HOME/cabal"
+export GHCUP_USE_XDG_DIRS='True'
 export GTK_RC_FILES="$XDG_CONFIG_HOME/gtk-1.0/gtkrc-1.0"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
 export HISTFILE="$XDG_CONFIG_HOME/bash/history"
 export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
 export PYTHONSTARTUP="$HOME/.local/bin/PYTHONSTARTUP"         # to move .python_history
 export VIMINIT="source $XDG_CONFIG_HOME/vim/vimrc"
-export MANPAGER='/bin/bash -c "vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
+export MANPAGER='/bin/bash -c "nvim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
 export MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"
 export SUDO_ASKPASS="$HOME/.local/bin/dmenu-askpass"
 #export WGETRC="$XDG_CONFIG_HOME/wgetrc"
