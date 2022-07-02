@@ -13,39 +13,39 @@ function fish_user_key_bindings
 end
 
 ### Colorscheme ###
-set     fish_color_normal            brcyan
 set     fish_color_autosuggestion    aaaaaa
-set     fish_color_command           brcyan
+set     fish_color_command           cyan
 set     fish_color_error             ff6c6b
-set     fish_color_param             brcyan
+set     fish_color_normal            cyan
+set     fish_color_param             cyan
 # Colorscheme: Base16 Default Light
+set -U  fish_color_cancel                        --reverse
+set -U  fish_color_comment           f7ca88
+set -U  fish_color_cwd               8ec87c
+set -U  fish_color_cwd_root          red
+set -U  fish_color_end               ba8baf
+set -U  fish_color_escape            86c1b9
+set -U  fish_color_history_current              --bold
+set -U  fish_color_host              normal
+set -U  fish_color_match             7cafc2
+set -U  fish_color_operator          7cafc2
 set -U  fish_color_quote             f7ca88
 set -U  fish_color_redirection       brgreen
-set -U  fish_color_end               ba8baf
-set -U  fish_color_comment           f7ca88
-set -U  fish_color_match             7cafc2
-set -U  fish_color_selection         white      --bold --background=brblack
 set -U  fish_color_search_match      bryellow   --background=brblack
-set -U  fish_color_history_current              --bold
-set -U  fish_color_operator          7cafc2
-set -U  fish_color_escape            86c1b9
-set -U  fish_color_cwd               green
-set -U  fish_color_cwd_root          red
-set -U  fish_color_valid_path                    --underline
+set -U  fish_color_selection         white      --bold --background=brblack
 set -U  fish_color_user              brgreen
-set -U  fish_color_host              normal
-set -U  fish_color_cancel                        --reverse
-set -U  fish_pager_color_prefix      normal      --bold --underline
-set -U  fish_pager_color_progress    brwhite     --background=cyan
+set -U  fish_color_valid_path                    --underline
 set -U  fish_pager_color_completion  normal
 set -U  fish_pager_color_description B3A06D
+set -U  fish_pager_color_prefix      normal      --bold --underline
+set -U  fish_pager_color_progress    brwhite     --background=cyan
 set -U  fish_pager_color_selected_background     --background=brblack
 
 ### PROMPT ###
 set -g fish_prompt_pwd_dir_length 9  # expand the char length of sub directories
 function fish_prompt -d "Write out the prompt"
-    set -l fish_color_host blue
-    set -l fish_color_user yellow
+    set -l fish_color_host "#7f7fff"
+    set -l fish_color_user "#ffd700"
     printf '%s%s\n%s[%s%s%s@%s%s%s]%s$%s ' \
         (set_color --bold $fish_color_cwd) (prompt_pwd) \
         (set_color --bold "#993299") \
