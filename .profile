@@ -25,19 +25,18 @@ fi
 
 
 ### EXPORTS
-# Personal
+# Personal programs, theme, directories
 export BROWSER='brave-browser'
 export TERMINAL='st'
 export EDITOR='nvim'
 export SHELL='/bin/fish'
 export THEME='Dark'
-export HOME='/home/br'
-export XDG_CONFIG_HOME='$HOME/.config'
-export XDG_CACHE_HOME='$HOME/.cache'
-# Other
-export EXA_COLORS='da=37:di=36'
-export HISTCONTROL=ignoredups:erasedups           # no duplicate entries
-export TERM='xterm-256color'                      # getting proper colors 
+# Exa theming
+export EXA_COLORS='da=37:di=36:ex=38;5;76'                              # file types
+export EXA_COLORS="$EXA_COLORS:ur=38;5;220:uw=38;5;160:ux=38;5;118"     # permission bits
+export EXA_COLORS="$EXA_COLORS:sn=38;5;76:sb=38;5;76"                   # file size
+export EXA_COLORS="$EXA_COLORS:uu=38;5;220:un=38;5;214"                 # users and groups
+export TERM='xterm-256color'            # getting proper colors 
 # Set the XDG base directories
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -57,6 +56,8 @@ export MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"
 export SUDO_ASKPASS="$HOME/.local/bin/dmenu-askpass"
 #export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 #export XAUTHORITY="$XDG_CONFIG_HOME/X11/Xauthority"  # could break some DM's (including gdm)
+# Other
+export HISTCONTROL=ignoredups:erasedups           # no duplicate entries
 
 #kill the bluetooth on start up 
 rfkill block bluetooth
