@@ -190,10 +190,11 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
     (setq evil-want-keybinding nil)
     (setq evil-want-C-u-scroll nil)
     (setq evil-want-C-i-jump nil)
+    (setq evil-vsplit-window-right t)
+    (setq evil-split-window-below t)
     :config
     (evil-mode 1)
     (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-    (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
 
     ;; Use visual line motions even outside of visual-line-mode buffers
     (evil-global-set-key 'motion "j" 'evil-next-visual-line)
@@ -450,6 +451,8 @@ This section contains the basic configuration for =org-mode= plus the configurat
     :config
     (setq org-ellipsis " ▾")
     (setq org-babel-no-eval-on-ctrl-c-ctrl-c t)
+    
+    (setq org-confirm-babel-evaluate nil)
 
     (setq org-agenda-start-with-log-mode t)
     (setq org-log-done 'note)
@@ -509,9 +512,16 @@ This section contains the basic configuration for =org-mode= plus the configurat
                      ((org-agenda-skip-function '(org-agenda-skip-if nil '(timestamp)))
                       (org-agenda-skip-function
                        `(org-agenda-skip-entry-if
+                         'notregexp ,(format "\\[#%s\\]" (char-to-string org-lowest-priority))))
+                      (org-agenda-block-separator nil)
+                      (org-agenda-overriding-header "Batch Tasks")))
+          (tags-todo "*"
+                     ((org-agenda-skip-function '(org-agenda-skip-if nil '(timestamp)))
+                      (org-agenda-skip-function
+                       `(org-agenda-skip-entry-if
                          'notregexp ,(format "\\[#%s\\]" (char-to-string org-highest-priority))))
                       (org-agenda-block-separator nil)
-                      (org-agenda-overriding-header "Important Tasks Without a Date\n")))
+                      (org-agenda-overriding-header "\nImportant Tasks Without a Date")))
           (agenda "" ((org-agenda-span 1)
                       (org-deadline-warning-days 0)
                       (org-agenda-block-separator nil)
@@ -521,26 +531,26 @@ This section contains the basic configuration for =org-mode= plus the configurat
                       ;; utility in multi-day views.
                       (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
                       ;; (org-agenda-format-date "%A %-e %B %Y")
-                      (org-agenda-overriding-header "\nToday's Agenda\n")))
+                      (org-agenda-overriding-header "\nToday's Agenda")))
           (agenda "" ((org-agenda-start-on-weekday nil)
                       (org-agenda-start-day "+1d")
                       (org-agenda-span 5)
                       (org-deadline-warning-days 0)
                       (org-agenda-block-separator nil)
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                      (org-agenda-overriding-header "\nNext Five Days\n")))
+                      (org-agenda-overriding-header "\nNext Five Days")))
           (agenda "" ((org-agenda-time-grid nil)
                       (org-agenda-start-on-weekday nil)
                       ;; We don't want to replicate the previous section's
                       ;; three days, so we start counting from the day after.
-                      (org-agenda-start-day "+4d")
+                      (org-agenda-start-day "+6d")
                       (org-agenda-span 14)
                       (org-agenda-show-all-dates nil)
                       (org-deadline-warning-days 0)
                       (org-agenda-block-separator nil)
                       (org-agenda-entry-types '(:deadline))
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                      (org-agenda-overriding-header "\nUpcoming Deadlines (+14d)\n")))))
+                      (org-agenda-overriding-header "\nUpcoming Deadlines (+14d)")))))
 
        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
        ("n" "Next Tasks"
@@ -1214,7 +1224,6 @@ For more thoughts on Eshell, check out these articles by Pierre Neidhardt:
 
 * File Management
 ** Dired
-
 Dired is a built-in file manager for Emacs that does some pretty amazing things!  Here are some key bindings you should try out:
 
 *** Key Bindings
@@ -1287,7 +1296,15 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
     :config
     (evil-collection-define-key 'normal 'dired-mode-map
       "h" 'dired-single-up-directory
-      "l" 'dired-single-buffer))
+      "l" 'dired-single-buffer
+      "ff"  '(lambda () (interactive) (dired-single-magic-buffer "~/.config/fish"))
+      "fv"  '(lambda () (interactive) (dired-single-magic-buffer "~/.config/vim"))
+      "fd"  '(lambda () (interactive) (dired-single-magic-buffer "~/Desktop"))
+      "fD"  '(lambda () (interactive) (dired-single-magic-buffer "~/Downloads"))
+      "fb"  '(lambda () (interactive) (dired-single-magic-buffer "~/.local/bin"))
+      "fss" '(lambda () (interactive) (dired-single-magic-buffer "~/.local/suckless/st"))
+      "fsd" '(lambda () (interactive) (dired-single-magic-buffer "~/.local/suckless/dwm"))
+      "fr"  '(lambda () (interactive) (dired-single-magic-buffer "/media/br/ru"))))
 
   (use-package dired-single
     :commands (dired dired-jump))
@@ -1302,12 +1319,6 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
     ;;(add-to-list 'dired-open-functions #'dired-open-xdg t)
     (setq dired-open-extensions '(("png" . "feh")
                                   ("mkv" . "mpv"))))
-
-;  (use-package dired-hide-dotfiles
-;    :hook (dired-mode . dired-hide-dotfiles-mode)
-;    :config
-;    (evil-collection-define-key 'normal 'dired-mode-map
-;      "H" 'dired-hide-dotfiles-mode))
 
 #+end_src
 
