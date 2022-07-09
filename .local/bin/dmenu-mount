@@ -10,6 +10,7 @@
 # - Make the notifications prettier. (https://askubuntu.com/questions/598601/how-to-customize-the-font-style-in-notify-send)
 # - Clean up script
 # - Show notifications. (https://stackoverflow.com/questions/46777581/notify-send-from-within-a-bash-script)
+# -  Add notification of mounting by fstab
 
 notifyPP() {
     # usage: notifyPP "string to be pretty printed" "['SUCCESS' | 'ERROR']"
@@ -37,6 +38,9 @@ case "$1" in
                 | tr -d '└─' \
                 | dmenu -i -p "Mounting which device?") \
             || exit 1
+
+        # TODO add notification of mounting by fstab
+        sudo -A mount $(ls -l /dev/disk/by-uuid/ | awk '/${dev}/ {print $9}') && exit 0
 
         dir=$(find /media -maxdepth 1 -type d  | dmenu -i -p "Where to mount?") || exit 1 
         if [ ! -d "$dir" ]; then 
