@@ -1,4 +1,5 @@
-#+title: Emacs Configuration
+#+TITLE: Emacs Configuration
+#+AUTHOR: Bryan Rinders
 #+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
 
 * Welcome!
@@ -472,8 +473,8 @@ This section contains the basic configuration for =org-mode= plus the configurat
         (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(t)" "CANC(k@)")))
 
     (setq org-refile-targets
-      '(("Archive.org" :maxlevel . 1)
-        ("Tasks.org" :maxlevel . 1)))
+      '(("archive.org" :maxlevel . 1)
+        ("tasks.org" :maxlevel . 1)))
 
     ;; Save Org buffers after refiling!
     (advice-add 'org-refile :after 'org-save-all-org-buffers)
@@ -1021,6 +1022,11 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
   :hook (prog-mode . rainbow-delimiters-mode))
 
 #+end_src
+
+* Mu4e
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
 
 * Small Utils
 ** evil-surround
