@@ -33,7 +33,7 @@ export SHELL='/bin/fish'
 export THEME='Dark'
 # Exa theming
 export EXA_COLORS='da=37:di=36:ex=38;5;76'                              # file types
-export EXA_COLORS="$EXA_COLORS:ur=38;5;220:uw=38;5;160:ux=38;5;118"     # permission bits
+export EXA_COLORS="$EXA_COLORS:ur=38;5;220:uw=38;5;160:ux=38;5;76"     # permission bits
 export EXA_COLORS="$EXA_COLORS:sn=38;5;76:sb=38;5;76"                   # file size
 export EXA_COLORS="$EXA_COLORS:uu=38;5;220:un=38;5;214"                 # users and groups
 export TERM='xterm-256color'            # getting proper colors 
