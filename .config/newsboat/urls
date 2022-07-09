@@ -32,7 +32,9 @@ https://artixlinux.org/feed.php "Linux"
 " "
 "---Tech News"
 https://feeds.feedburner.com/TheHackersNews "CybSec"
+https://hnrss.org/newest
 https://www.ru.nl/dis/vm/news-digital-security/?rss=true "CybSec" "Academia"
+https://arxiv.org/rss/cs.CR "CybSec" "Academia" "~Arxiv.org Crypto"
 
 " "
 "---General News"
