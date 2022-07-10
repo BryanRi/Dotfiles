@@ -11,10 +11,11 @@ alias .c='cd $HOME/.config/'
 alias .b='cd $HOME/.local/bin'
 
 # Edit config files
-alias ,b='vim $HOME/.config/bash/bashrc'
-alias ,ba='vim $HOME/.config/bash/bash_aliases'
-alias ,awm='vim $HOME/.config/awesome/rc.lua'
-alias ,v='vim $HOME/.config/vim/vimrc'
+alias vim="$EDITOR"
+alias ,b="$EDITOR $HOME/.config/bash/bashrc"
+alias ,ba="$EDITOR $HOME/.config/bash/bash_aliases"
+alias ,awm="$EDITOR $HOME/.config/awesome/rc.lua"
+alias ,v="$EDITOR $HOME/.config/vim/vimrc"
 
 # system
 alias ssn='shutdown now'
