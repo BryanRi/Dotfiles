@@ -18,3 +18,20 @@ I also use some Suckless software that each have their own dedicated repo.
 
 * Dotfile management
 I manage my dotfiles using the git bare repo method, discribed in this [[https://www.atlassian.com/git/tutorials/dotfiles][article]].
+
+#+BEGIN_SOURCE
+git clone --bare git@github.com:BryanRi/Dotfiles.git $HOME/.dots
+function dots {
+   /usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME $@
+}
+config checkout
+if [ $? = 0 ]; then
+  echo "Checked out config.";
+  else
+    mkdir -p .config-backup
+    echo "Backing up pre-existing dot files.";
+    dots checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
+    config checkout
+fi;
+dots config status.showUntrackedFiles no
+#+END_SOURCE
