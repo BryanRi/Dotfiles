@@ -18,7 +18,7 @@ I also use some Suckless software that each have their own dedicated repo.
 
 * Dotfile management
 I manage my dotfiles using the git bare repo method, discribed in this [[https://www.atlassian.com/git/tutorials/dotfiles][article]].
-
+Use this script to automatically setup all of my dotfiles on a new system:
 #+BEGIN_SRC
 git clone --bare git@github.com:BryanRi/Dotfiles.git $HOME/.dots
 function dots {
