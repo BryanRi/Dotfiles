@@ -5,11 +5,14 @@
 # $ ls /usr/include/X11/*key* 
 # (Do not include the 'XK_' in the key commands)
 
-#XF86AudioRaiseVolume
+XF86AudioRaiseVolume
+  pactl set-sink-volume 4 +5%
 #  amixer -D pulse sset Master 5%+
-#XF86AudioLowerVolume
+XF86AudioLowerVolume
+  pactl set-sink-volume 4 -5%
 #  amixer -D pulse sset Master 5%-
-#XF86AudioMute
+XF86AudioMute
+  pactl set-sink-mute 4 toggle
 #  amixer -D pulse sset Master toggle
 
 {XF86MonBrightnessUp, XF86MonBrightnessDown}
@@ -20,12 +23,12 @@ super + shift + x
 
 ### Launch Applications ###
 # Program launcher
-super + r
-    rofi -show run -theme $HOME/.config/rofi/themes/dmenu.rasi
+#super + r
+    #rofi -show run -theme $HOME/.config/rofi/themes/dmenu.rasi
 
 # Terminal
-super + {c, g}
-    {$TERMINAL, alacritty}
+#super + {c, g}
+    #{$TERMINAL, alacritty}
 super + y
     $TERMINAL -e vifm -c "map D <nop>" -c "nmap b t"
 super+w
@@ -40,8 +43,8 @@ super + {slash, question}
     /usr/local/bin/dmenu-mount {'-m', '-u'}
 
 # GUI
-super + b
-    $BROWSER
+#super + b
+    #$BROWSER
 super + t
     emacs
 super + l
