@@ -1,4 +1,0 @@
-#!/bin/bash
-
-#feh --bg-scale /home/bryan/Pictures/Wallpapers/kali-1.jpg
-feh --bg-scale --no-fehbg --randomize ~/Pictures/Wallpapers

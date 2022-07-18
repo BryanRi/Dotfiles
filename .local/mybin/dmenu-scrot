@@ -12,8 +12,8 @@
 # - change file name for selection and active window
 
 DEFAULT_NAME="Scrot default"
-DEFAULT_DIR="$HOME/Pictures/shots"
-[ ! -d "$DEFAULT_DIR" ] && mkdir -p "$DEFAULT_DIR"
+DEFAULT_DIR="$MY_PIX_HOME/shots"
+[ -d "$DEFAULT_DIR" ] || mkdir -p "$DEFAULT_DIR"
 
 options='Selection\nFullscreen\nActive Window'
 choice=$(echo "$options" | dmenu -i -p 'Screenshot options:') || exit 1

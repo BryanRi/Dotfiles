@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# safely removing files by moving them to the trash
+
+[ -d "$XDG_DATA_HOME/Trash/files" ] || mkdir -p "$XDG_DATA_HOME/Trash/files"
+
+[ "$1" = "/" ] && >&2 echo "Don't delete your root directory" && exit 1
+mv -i "$@" "$XDG_DATA_HOME/Trash/files"

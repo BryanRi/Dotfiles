@@ -40,9 +40,9 @@ case "$1" in
             || exit 1
 
         # TODO add notification of mounting by fstab
-        sudo -A mount $(ls -l /dev/disk/by-uuid/ | awk '/${dev}/ {print $9}') && exit 0
+        #sudo -A mount $(ls -l /dev/disk/by-uuid/ | awk '/${dev}/ {print $9}') && exit 0
 
-        dir=$(find /media -maxdepth 1 -type d  | dmenu -i -p "Where to mount?") || exit 1 
+        dir=$(find /media /mnt -maxdepth 1 -type d  2> /dev/null | dmenu -i -p "Where to mount?") || exit 1 
         if [ ! -d "$dir" ]; then 
             noyes=$(printf "No\nYes" | dmenu -i -p "${dir} does not exist, create it?") || exit 1
             [ "$noyes" = "No" ] && exit 2
