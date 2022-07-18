@@ -9,8 +9,8 @@ abbr -a .d 'cd $HOME/Desktop/'
 abbr -a .D 'cd $HOME/Downloads/'
 abbr -a .c 'cd $HOME/.config/'
 abbr -a .b 'cd $HOME/.local/bin'
-abbr -a .ss 'vim .local/suckless/st'
-abbr -a .sd 'vim .local/suckless/dwm'
+abbr -a .ss 'cd .local/suckless/st'
+abbr -a .sd 'cd .local/suckless/dwm'
 
 ### Edit config files
 abbr -a ,b 'vim $HOME/.config/bash/bashrc'
@@ -21,8 +21,8 @@ abbr -a ,f 'vim $HOME/.config/fish/config.fish'
 abbr -a ,fa 'vim $HOME/.config/fish/fish_aliases'
 abbr -a ,fb 'vim $HOME/.config/fish/fish_abbreviations'
 abbr -a ,fv 'vim $HOME/.config/fish/fish_variables'
-abbr -a ,ss 'vim .local/suckless/st/config.def.h'
-abbr -a ,sd 'vim .local/suckless/dwm/config.def.h'
+abbr -a ,ss 'vim $HOME/.local/suckless/st/config.def.h'
+abbr -a ,sd 'vim $HOME/.local/suckless/dwm/config.def.h'
 
 ### system
 abbr -a ssn 'shutdown now'
