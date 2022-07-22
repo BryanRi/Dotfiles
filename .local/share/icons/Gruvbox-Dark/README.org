@@ -1,0 +1,6 @@
+* Gruvbox Icon Theme for GTK
+This is a bare bones icon theme that should provide icons for your gui gtk file
+manager. It does *not* include any icons for .desktop files, emotes or the
+systray. If you like this theme but feel there is missing something check out
+the [[https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme][original source]],
+this should include all these icons and many more (2022-07-22).
