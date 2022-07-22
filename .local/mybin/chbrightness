@@ -16,6 +16,7 @@
 path="/sys/class/backlight/intel_backlight/brightness"
 current=$(cat $path)
 change=500
+max=20000
 
 case $1 in
     show)
@@ -25,6 +26,11 @@ case $1 in
     -)
     	echo "$((current-change))" > $path ;;
     *)
+        expr "$1" : "^[1-9][0-9]*$" > /dev/null \
+            && [ "$1" -le "$max" ] \
+            && echo "$1" > $path \
+            && exit 0
+
         cat << EOF ;;
 Usage: chbrightness [OPTION]
 
@@ -32,5 +38,6 @@ OPTIONs:
   show, to show the current brightness
   +,    to increase the brightness by $change
   -,    to decrease the brightness by $change
+  N,    where N is a number between 0 and $max
 EOF
 esac
