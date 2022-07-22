@@ -1,0 +1,2 @@
+* Gruvbox Dark GTK Theme
+This is a clone of [[https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme][this]], but with some stuff removed that is not necessary for me. If you need Gnome-shell, Cinnamon or Metacity themes check out the link.
