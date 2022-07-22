@@ -4,15 +4,19 @@
 # Find key names with: 
 # $ ls /usr/include/X11/*key* 
 # (Do not include the 'XK_' in the key commands)
-
+#
+# 4 is the index as found when running 'pacmd list-sinks'
+# more advanced scripting is required if you also use headphone
+# or other audio gear.
+# 2 is the number specified in dwmblocks/config.h as 'signal'
 XF86AudioRaiseVolume
-  pactl set-sink-volume 4 +5%
+  pactl set-sink-volume 4 +5% && sigdwmblocks 2
 #  amixer -D pulse sset Master 5%+
 XF86AudioLowerVolume
-  pactl set-sink-volume 4 -5%
+  pactl set-sink-volume 4 -5% && sigdwmblocks 2
 #  amixer -D pulse sset Master 5%-
 XF86AudioMute
-  pactl set-sink-mute 4 toggle
+  pactl set-sink-mute 4 toggle && sigdwmblocks 2
 #  amixer -D pulse sset Master toggle
 
 {XF86MonBrightnessUp, XF86MonBrightnessDown}
@@ -23,12 +27,13 @@ super + shift + x
 
 ### Launch Applications ###
 # Program launcher
-#super + r
-    #rofi -show run -theme $HOME/.config/rofi/themes/dmenu.rasi
+super + r
+    dmenu_run
+#    rofi -show run -theme $HOME/.config/rofi/themes/dmenu.rasi
 
 # Terminal
-#super + {c, g}
-    #{$TERMINAL, alacritty}
+super + c
+    $TERMINAL
 super + y
     $TERMINAL -e vifm -c "map D <nop>" -c "nmap b t"
 super+w
@@ -43,10 +48,11 @@ super + {slash, question}
     /usr/local/bin/dmenu-mount {'-m', '-u'}
 
 # GUI
-#super + b
-    #$BROWSER
-super + t
+super + b
+    $BROWSER
+super + p
     emacs
 super + l
-    GTK_THEME=Adwaita:dark nautilus
+     pcmanfm
+#    GTK_THEME=Adwaita:dark nautilus
 
