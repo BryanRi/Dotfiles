@@ -1,5 +1,3 @@
-#!/bin/sh
-
 # ~/.profile: executed by the command interpreter for login shells.
 # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
 # exists.
@@ -10,7 +8,7 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-# if running bash
+### if running bash
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$XDG_CONFIG_HOME/bash/bashrc" ]; then
@@ -20,20 +18,23 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-# set PATH so it includes user's private bin if it exists
+### set PATH so it includes user's private bin if it exists
 [ -d "$HOME/.local/mybin" ] && PATH=$PATH":$HOME/.local/mybin"
 [ -d "$HOME/.local/bin"   ] && PATH="$PATH:$HOME/.local/bin"
 
 
 ### EXPORTS
 # Personal programs, theme, directories
-export BROWSER='brave-browser'
+export BROWSER='librewolf'
 export TERMINAL='st'
 export EDITOR='nvim'
 export SHELL='/bin/fish'
 export THEME='Dark'
-export MY_PIX_HOME="$HOME/dox/pix"  # My pictures directory
-export MY_DL_HOME="$HOME/dox/dls"   # My downloads directory
+export MY_BIN_DIR="$HOME/.local/mybin"  # My personal script directory
+export MY_DESKTOP_DIR="$HOME/top"       # My downloads directory
+export MY_DOWNLOADS_DIR="$HOME/dox/dls" # My downloads directory
+export MY_MAIN_USB="/mnt/usb1"          # Mount point for my main usb
+export MY_PICTURES_DIR="$HOME/dox/pix"  # My pictures directory
 # Exa theming
 export EXA_COLORS='da=37:di=36:ex=38;5;76'                  # file types
 export EXA_COLORS="$EXA_COLORS:ur=38;5;220:uw=38;5;160:ux=38;5;76:ue=38;5;76"   # permission bits
@@ -57,18 +58,35 @@ export GTK_RC_FILES="$XDG_CONFIG_HOME/gtk-1.0/gtkrc-1.0"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
 export HISTFILE="$XDG_STATE_HOME/bash/history"
 export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"        # Jupyter (Python)
-export PYTHONSTARTUP="$HOME/.local/bin/PYTHONSTARTUP"       # to move .python_history
-export VIMINIT="source $XDG_CONFIG_HOME/vim/vimrc"
-export MANPAGER='/bin/bash -c "nvim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
-export MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"
-export SUDO_ASKPASS="$HOME/.local/bin/dmenu-askpass"
-#export WGETRC="$XDG_CONFIG_HOME/wgetrc"
-export XAUTHORITY="$XDG_CONFIG_HOME/X11/Xauthority"  # could break some DM's (including gdm)
+export PYTHONSTARTUP="$MY_BIN_DIR/PYTHONSTARTUP"            # to move .python_history
+export VIMINIT="source $XDG_CONFIG_HOME/nvim/init.vim"
+#export VIMRUNTIME="source $XDG_CONFIG_HOME/vim/"
+export MANPAGER='/bin/bash -c "vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
+#export MANPAGER="nvim -c 'set ft=man' -"
+#export MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"
+export SUDO_ASKPASS="$MY_BIN_DIR/dmenu-askpass"
+export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+export XAUTHORITY="$XDG_CONFIG_HOME/X11/Xauthority"  # could break some DM's
 # Other
 export HISTCONTROL=ignoredups:erasedups           # no duplicate entries
 
-#kill the bluetooth on start up 
-rfkill block bluetooth
+### Change some default settings
+doas rfkill block bluetooth
+# Custom scripts
+doas chbrightness 4000
 
-# Start the X server
-startx "$XDG_CONFIG_HOME/X11/xinitrc"
+### Start the X server
+if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then 
+    cat << EOF
+Which window manager would you like to start:
+    default)   dwm
+    a      )   awesome
+    x      )   xmonad
+    none   )   Stay in tty
+EOF
+    read WM
+    [ "$WM" = "none" ] && exit 0
+    [ "$WM" = "a" ] && exec startx "$XDG_CONFIG_HOME/X11/xinitrc" "awesomewm"
+    [ "$WM" = "x" ] && exec startx "$XDG_CONFIG_HOME/X11/xinitrc" "xmonad"
+    exec startx "$XDG_CONFIG_HOME/X11/xinitrc"
+fi
