@@ -4,53 +4,58 @@ abbr -a webgoat 'java -jar ~/Downloads/webgoat-server-8.2.2.jar'
 ### Quickly change directories
 abbr -a .. 'cd ..'
 abbr -a ... 'cd ../..'
-abbr -a ru 'cd /media/br/ru'
-abbr -a .d 'cd $HOME/Desktop/'
-abbr -a .D 'cd $HOME/Downloads/'
-abbr -a .c 'cd $HOME/.config/'
-abbr -a .b 'cd $HOME/.local/bin'
-abbr -a .ss 'cd .local/suckless/st'
-abbr -a .sd 'cd .local/suckless/dwm'
+abbr -a .ru 'cd $MY_MAIN_USB/ru'
+abbr -a .c 'cd $XDG_CONFIG_HOME/'
+abbr -a .b 'cd $MY_BIN_DIR/'
+abbr -a .d 'cd $MY_DESKTOP_DIR/'
+abbr -a .D 'cd $MY_DOWNLOADS_DIR/'
+abbr -a .p 'cd $MY_PICTURES_DIR/'
+abbr -a .ss 'cd $HOME/.local/suckless/st/'
+abbr -a .sd 'cd $HOME/.local/suckless/dwm/'
+abbr -a .sb 'cd $HOME/.local/suckless/dwmblocks/'
 
 ### Edit config files
-abbr -a ,b 'vim $HOME/.config/bash/bashrc'
-abbr -a ,ba 'vim $HOME/.config/bash/bash_aliases'
-abbr -a ,awm 'vim $HOME/.config/awesome/rc.lua'
-abbr -a ,v 'vim $HOME/.config/vim/vimrc'
-abbr -a ,f 'vim $HOME/.config/fish/config.fish'
-abbr -a ,fa 'vim $HOME/.config/fish/fish_aliases'
-abbr -a ,fb 'vim $HOME/.config/fish/fish_abbreviations'
-abbr -a ,fv 'vim $HOME/.config/fish/fish_variables'
+abbr -a ,b 'vim $XDG_CONFIG_HOME/bash/bashrc'
+abbr -a ,ba 'vim $XDG_CONFIG_HOME/bash/bash_aliases'
+abbr -a ,awm 'vim $XDG_CONFIG_HOME/awesome/rc.lua'
+abbr -a ,v 'vim $XDG_CONFIG_HOME/nvim/init.vim'
+abbr -a ,f 'vim $XDG_CONFIG_HOME/fish/config.fish'
+abbr -a ,fa 'vim $XDG_CONFIG_HOME/fish/fish_aliases'
+abbr -a ,fb 'vim $XDG_CONFIG_HOME/fish/fish_abbreviations'
+abbr -a ,fv 'vim $XDG_CONFIG_HOME/fish/fish_variables'
 abbr -a ,ss 'vim $HOME/.local/suckless/st/config.def.h'
 abbr -a ,sd 'vim $HOME/.local/suckless/dwm/config.def.h'
+abbr -a ,sb 'vim $HOME/.local/suckless/dwmblocks/config.def.h'
+
+### Priviledge elevation
+abbr -a d 'doas'
 
 ### system
-abbr -a ssn 'shutdown now'
+abbr -a ssn 'doas poweroff'
+abbr -a reboot 'doas reboot'
 abbr -a wifioff 'nmcli radio wifi off'
 abbr -a wifion 'nmcli radio wifi on'
 
 ### mount usb, writable by non-root users
 #alias mounto sudo mount -o gid=users,fmask=113,dmask=002
-abbr -a mtu 'sudo mount -o uid=1000,fmask=113,dmask=002 /dev/sda'
-abbr -a mtt 'sudo umount /dev/sda'
+abbr -a mtu 'doas mount -o uid=1000,fmask=113,dmask=002 /dev/sda'
+abbr -a mtt 'doas umount /dev/sda'
 
 ### apt
-abbr -a a 'sudo apt'
-abbr -a ati 'sudo apt install'
-abbr -a atr 'sudo apt remove'
-abbr -a atu 'sudo apt update'
-abbr -a atuu 'sudo apt update && sudo apt upgrade'
-abbr -a atar 'sudo apt autoremove'
+#abbr -a a 'sudo apt'
+#abbr -a ati 'sudo apt install'
+#abbr -a atr 'sudo apt remove'
+#abbr -a atu 'sudo apt update'
+#abbr -a atuu 'sudo apt update && sudo apt upgrade'
+#abbr -a atar 'sudo apt autoremove'
 
 ### pacman and yay
-abbr -a pacs 'doas pacman -S'
-abbr -a pacsyu 'doas pacman -Syyu'                    # update only standard pkgs
-abbr -a yaysua 'yay -Sua --noconfirm'                 # update only AUR pkgs (yay)
-abbr -a yaysyu 'yay -Syu --noconfirm'                 # update standard pkgs and AUR pkgs (yay)
-abbr -a parsua 'paru -Sua --noconfirm'                # update only AUR pkgs (paru)
-abbr -a parsyu 'paru -Syu --noconfirm'                # update standard pkgs and AUR pkgs (paru)
-abbr -a unlock 'doas rm /var/lib/pacman/db.lck'       # remove pacman lock
-abbr -a cleanup 'doas pacman -Rns \(pacman -Qtdq\)'   # remove orphaned packages
+abbr -a pms 'doas pacman -S'
+abbr -a psyu 'doas pacman -Syu'                     # update only standard pkgs
+abbr -a parsua 'doas paru -Sua --noconfirm'         # update only AUR pkgs (paru)
+abbr -a parsyu 'doas paru -Syu --noconfirm'         # update standard pkgs and AUR pkgs (paru)
+abbr -a unlock 'doas rm /var/lib/pacman/db.lck'     # remove pacman lock
+abbr -a cleanup 'doas pacman -Rns \(pacman -Qtdq\)' # remove orphaned packages
 
 ### commands with extra flags
 abbr -a mvi 'mv -i'
@@ -60,8 +65,7 @@ abbr -a md 'mkdir -p'
 ### xclip copy and paste
 abbr -a xc 'xclip -selection c'
 abbr -a xv 'xclip -selection c -o'
-## clear clipboard
-abbr -a xcc 'xclip -sel clip < /dev/null'
+abbr -a xcc 'xclip -sel clip < /dev/null'   # clear clipboard
 
 ### Programming
 abbr -a pip 'pip3'
