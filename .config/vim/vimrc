@@ -1,4 +1,9 @@
 "" ~/.vimrc
+if &compatible
+  " Vim defaults to `compatible` when selecting a vimrc with the command-line
+  " `-u` argument. Override this.
+  set nocompatible
+endif
 
 """ Move all config files to .config
 " https://vi.stackexchange.com/questions/11879/how-can-put-vimrc-and-viminfo-into-vim-directory
