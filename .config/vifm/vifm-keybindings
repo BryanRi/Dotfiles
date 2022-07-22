@@ -1,24 +1,61 @@
-### Quickly change directories
-nnoremap .ru :cd /mnt/usb1/ru
-nnoremap .c :cd $XDG_CONFIG_HOME
-nnoremap .b :cd $MY_BIN_DIR
-nnoremap .d :cd $MY_DESKTOP_DIR
-nnoremap .D :cd $MY_DOWNLOADS_DIR
-nnoremap .p :cd $MY_PICTURES_DIR
-nnoremap .ss :cd $HOME/.local/suckless/st
-nnoremap .sd :cd $HOME/.local/suckless/dwm
-nnoremap .sb :cd $HOME/.local/suckless/dwmblocks
+" Quickly change directories
+nnoremap .ru :cd $MY_MAIN_USB/ru<CR>
+nnoremap .c :cd $XDG_CONFIG_HOME<CR>
+nnoremap .b :cd $MY_BIN_DIR<CR>
+nnoremap .d :cd $MY_DESKTOP_DIR<CR>
+nnoremap .D :cd $MY_DOWNLOADS_DIR<CR>
+nnoremap .p :cd $MY_PICTURES_DIR<CR>
+nnoremap .ss :cd $HOME/.local/suckless/st<CR>
+nnoremap .sd :cd $HOME/.local/suckless/dwm<CR>
+nnoremap .sb :cd $HOME/.local/suckless/dwmblocks<CR>
 
-### Edit config files
-nnoremap ,b :vim $HOME/.config/bash/bashrc
-nnoremap ,ba :vim $HOME/.config/bash/bash_aliases
-nnoremap ,awm :vim $HOME/.config/awesome/rc.lua
-nnoremap ,v :vim $HOME/.config/vim/vimrc
-nnoremap ,f :vim $HOME/.config/fish/config.fish
-nnoremap ,fa :vim $HOME/.config/fish/fish_aliases
-nnoremap ,fb :vim $HOME/.config/fish/fish_abbreviations
-nnoremap ,fv :vim $HOME/.config/fish/fish_variables
-nnoremap ,ss :vim $HOME/.local/suckless/st/config.def.h
-nnoremap ,sd :vim $HOME/.local/suckless/dwm/config.def.h
-nnoremap ,sb :vim $HOME/.local/suckless/dwmblocks/config.def.h
+" Edit config files
+nnoremap ,b :vim $HOME/.config/bash/bashrc<CR>
+nnoremap ,ba :vim $HOME/.config/bash/bash_aliases<CR>
+nnoremap ,awm :vim $HOME/.config/awesome/rc.lua<CR>
+nnoremap ,v :vim $HOME/.config/vim/vimrc<CR>
+nnoremap ,f :vim $HOME/.config/fish/config.fish<CR>
+nnoremap ,fa :vim $HOME/.config/fish/fish_aliases<CR>
+nnoremap ,fb :vim $HOME/.config/fish/fish_abbreviations<CR>
+nnoremap ,fv :vim $HOME/.config/fish/fish_variables<CR>
+nnoremap ,ss :vim $HOME/.local/suckless/st/config.def.h<CR>
+nnoremap ,sd :vim $HOME/.local/suckless/dwm/config.def.h<CR>
+nnoremap ,sb :vim $HOME/.local/suckless/dwmblocks/config.def.h<CR>
+nnoremap ,c :write | edit SMYVIFMRC | restart &<CR>
 
+" Start shell in current directory
+nnoremap s :shell<CR>
+
+" Toggle visibility of preview wondow
+nnoremap w :view<CR>
+vnoremap w :view<CR>gv
+
+" Open file in the bacnground using its default program
+nnoremap gb :file &<CR>
+
+if executable('xclp')
+    " Yank current dicrectory parh into the clipboard
+    nnoremap yg :!echo %d | xclip %i<CR>
+    " Yank current file path into the clipboard
+    nnoremap yf :!echo %c:p |xclip %i<CR>
+elseif executable('xsel')
+    " Yank current dicrectory parh into the clipboard
+    nnoremap yg :!echo -n %d | xsel --input --primary %i &&
+                \ echo -n %d | xsel --clipboard --input %i<CR>
+    " Yank current file path into the clipboard
+    nnoremap yg :!echo -n %c | xsel --input --primary %i &&
+                \ echo -n %c | xsel --clipboard --input %i<CR>
+endif
+
+" Mappings for faster renaming
+nnoremap I cw<C-a>
+nnoremap cc cw<C-u>
+nnoremap cC cW
+nnoremap A cw
+
+" Open console in current directory
+nnoremap ,f :!$TERMINAL &<CR>
+
+" Create new files and directories
+nnoremap <f2> :touch 
+nnoremap <f3> :mkdir 
