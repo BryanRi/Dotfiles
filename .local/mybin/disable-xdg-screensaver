@@ -3,8 +3,5 @@
 # Script to disable the xdg-screensaver
 
 # the hex value of the root window id can be found with
-rootwndw=$(xwininfo -root | awk '$1 == "xwininfo:" {print $4}')
-
-# disable the screensaver
-#xdg-screensaver suspend 0x7c8 # $window_id
+rootwndw="$(xwininfo -root | awk '$1 == "xwininfo:" {print $4}')"
 xdg-screensaver suspend "$rootwndw"

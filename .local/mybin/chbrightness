@@ -1,37 +1,17 @@
-#!/bin/bash
+#!/bin/sh
 #
-# Simple script to change the screen brightness
+# Simple script to change the screen brightness. Requires root rights.
 #
-# Copy this script to /usr/local/bin and add /usr/local/bin/chbrightness to the
-# visudoers file to the commands that can be run without password, i.e.
-# <username> ALL = NOPASSWD: /usr/local/bin/chbrightness
-# where <username> is replaced with your username.
-# Then you can keybind chbrightness + and chbrightness - to some keybindings to
-# change your screen brightness.
-#
-# to find the proper path to the brightness file use
-# $ sudo find /sys/ -name brightness
+# Dependencies:
+# - None
 
-#path="/sys/devices/pci0000:00/0000:00:02.0/drm/card0/card0-eDP-1/intel_backlight/brightness"
-path="/sys/class/backlight/intel_backlight/brightness"
-current=$(cat $path)
+path="/sys/class/backlight/intel_backlight"
+current="$(cat "$path/brightness")" || exit 1
 change=500
-max=20000
+max="$(cat "$path/max_brightness")" || 20000
 
-case $1 in
-    show)
-        echo "$current" ;;
-    +)
-    	echo "$((current+change))" > $path ;;
-    -)
-    	echo "$((current-change))" > $path ;;
-    *)
-        expr "$1" : "^[1-9][0-9]*$" > /dev/null \
-            && [ "$1" -le "$max" ] \
-            && echo "$1" > $path \
-            && exit 0
-
-        cat << EOF ;;
+usage() {
+    cat << EOF
 Usage: chbrightness [OPTION]
 
 OPTIONs:
@@ -40,4 +20,17 @@ OPTIONs:
   -,    to decrease the brightness by $change
   N,    where N is a number between 0 and $max
 EOF
+}
+
+# shellcheck disable=SC2015
+case $1 in
+    show) echo "$current" ;;
+    -) new="$(( current - change ))"
+       echo "$(( 0 < new ? new : 0 ))" > $path ;;
+    +) new="$(( current + change ))"
+       echo "$(( new < max ? max : new ))" > $path ;;
+    *) expr "$1" : "^[1-9][0-9]*$" > /dev/null \
+           && [ "$1" -le "$max" ] \
+           && echo "$1" > $path \
+           || usage ;;
 esac

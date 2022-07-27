@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Dmenu helper script. Returns 0 when answered with yes and 1 otherwise.
+
+usage() {
+    >&2 cat << EOF
+Usage: dmenu-noyes [ prompt ]
+    prompt, string given to dmenu.
+EOF
+}
+
+[ "$#" != 1 ] && usage && exit 1
+
+# shellcheck disable=SC2086
+noyes="$(printf "No\nYes" | ${DMENU} "$1")"
+[ "${noyes}" = "No" ] || [ -z "${noyes}" ] && exit 1
+exit 0
+

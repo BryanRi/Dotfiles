@@ -3,10 +3,10 @@
 # This script requires that your programs set the theme based on the THEME env
 # variable. Once toggled only new terminals will have the new theme.
 
-light="set -x THEME Light"
-dark="set -x THEME Dark"
+light="set -x THEME light"
+dark="set -x THEME dark"
 path="$XDG_CONFIG_HOME/fish/theme.env"
-if [ "$THEME" != "Dark" ]; then 
+if [ "$THEME" != "dark" ]; then 
     echo "$dark" > "$path" && echo "The theme is now dark."
 else
     echo "$light" > "$path" && echo "The theme is now light."

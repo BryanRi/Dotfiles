@@ -3,83 +3,93 @@
 # Script for mounting and unmounting devices.
 #
 # Dependancies:
-# - dmenu
-# - dmenu-askpass (personal script)
+# - dmenu, or some other dmenu like program such as rofi.
+# - dmenu-askpass (personal script, see ~/.local/mybin/dmenu-askpass), only if
+#   using sudo, if using opendoas add the following to your /etc/doas.conf:
+#     permit nopass cmd mount
+#     permit nopass cmd umount
 
 # TODO:
-# - Make the notifications prettier. (https://askubuntu.com/questions/598601/how-to-customize-the-font-style-in-notify-send)
-# - Clean up script
-# - Show notifications. (https://stackoverflow.com/questions/46777581/notify-send-from-within-a-bash-script)
-# -  Add notification of mounting by fstab
+# - Testing
+# - use dmenu-choose-dir and dmenu-noyes helper scripts instead of choose_mountpoint() and mk_dir().
 
-notifyPP() {
-    # usage: notifyPP "string to be pretty printed" "['SUCCESS' | 'ERROR']"
-    body="<span font='14px'><b>$1</b></span>" 
-    case "$2" in
-        "ERROR") notify-send --urgency=critical -t 4000 "$0:" "${body}" >/dev/null 2>&1 ;;
-        *) notify-send -t 4000 "$0:" "${body}" >/dev/null 2>&1 ;;
+# Define these variables if they are not set as environment variables
+[ -z "${SUDO}" ] && SUDO="sudo -A"
+[ -z "${DMENU}" ] && DMENU="dmenu"
+[ "${DMENU}" = "dmenu" ] && DMENU_FLAGS="-i -p"
+
+# Global variable
+dev=""  # device to be mounted
+dir=""  # directory to mount at
+mopt="uid=1000,fmask=113,dmask=002"  # mount options
+
+usage() {  # Usage: usage
+    cat << EOF
+Usage: $0 [-m | -u]
+    -a, Mount all connected devices as specified in /etc/fstab
+    -h, Display help text and exit.
+    -m, Mounting a usb device chosen with ${DMENU}.
+    -u, Unmounting a usb device chosen with ${DMENU}.
+EOF
+}
+
+notify_pp() {  # Usage: notify_pp [ 0 | 1 ] [ mounted device ] [ Error message ]
+    #body="<span font='14px'><b>$1</b></span>" 
+    case "$1" in
+        0) notify-send -t 4000 "$0:" "Succesfully mounted $2" >/dev/null 2>&1 ;;
+        *) notify-send --urgency=critical -t 4000 "$0:" "$3" >/dev/null 2>&1 ;;
     esac
 }
 
+mk_dir() {  # Usage: mk_dir
+    # shellcheck disable=SC2086
+    noyes="$(printf "No\nYes" \
+            | ${DMENU} ${DMENU_FLAGS} "${dir} does not exist, create it?")"
+    [ "${noyes}" = "No" ] || [ -z "${noyes}" ] && return 1
+    mkdir -p "/mnt/${dir}" && return
+}
+
+choose_mountpoint() {  # Usage: choose_mountpoint
+    # shellcheck disable=SC2086
+    dir="$(find "$MY_DOCUMENTS_DIR/mnt" /mnt -maxdepth 1 -type d  2> /dev/null \
+            | ${DMENU} ${DMENU_FLAGS} "Where to mount?")" \
+        || return 1
+    [ ! -d "$dir" ] && mk_dir || return 1
+    return 0
+}
+
+choose_dev() {  # Usage: choose_dev [ m | u ] "Dmenu prompt"
+    # shellcheck disable=SC2086
+    dev=$(lsblk -lo NAME,SIZE,TYPE,MOUNTPOINTS \
+            | case "$1" in
+                -m) awk '/part $/ { print $1" ("$2")" }' ;;
+                -u) awk '/\/mnt/ || /\/home\// { print $1" ("$2")" }' ;;
+                * ) >&2 echo "Wrong argument: $1, for choose_dev()" ;;
+              esac \
+            | ${DMENU} ${DMENU_FLAGS} "$2" \
+            | cut -d \  -f 1) \
+        && return 0 || return 1
+}
+
+mount_dev() {  # Usage: [ mount | umount ] [ --all | $dev | -o $mopt $dev $dir ] 
+    # shellcheck disable=SC2086
+    msg="$(${SUDO} $1 2>&1)"
+    notify_pp "$?" "$dev" "$msg"
+}
+
 case "$1" in
-    "-a"|"--all")
-        # Mount all connected deviced that are in /etc/fstab
-        msg="$(sudo -A mount --al 2>&1)"
-        if [ $? = 0 ];
-        then notifyPP "Successfully mounted all devices." "SUCCESS"
-        else notifyPP "${msg}" "ERROR"
-        fi ;;
+    -a) dev="all devices"
+        mount_dev "mount --all" ;;
 
-    "-m"|"--mount")
-        # Mounting
-        dev=$(lsblk -e 7,259 \
-                | grep "part \$" \
-                | cut -d \  -f 1 \
-                | tr -d '└─' \
-                | dmenu -i -p "Mounting which device?") \
-            || exit 1
+    -m) choose_dev "$1" "Mounting which device?" || exit 1
+        # Mount device if listed in /etc/fstab
+        mount_dev "mount /dev/${dev}" && exit 0
+        # Mount device at a specific dir
+        choose_mountpoint && mount_dev "mount -o ${mopt} /dev/${dev} ${dir}" ;;
 
-        # TODO add notification of mounting by fstab
-        #sudo -A mount $(ls -l /dev/disk/by-uuid/ | awk '/${dev}/ {print $9}') && exit 0
+    -u) choose_dev "$1" "Unmounting which device?" || exit 1
+        mount_dev "umount /dev/${dev}" ;;
 
-        dir=$(find /media /mnt -maxdepth 1 -type d  2> /dev/null | dmenu -i -p "Where to mount?") || exit 1 
-        if [ ! -d "$dir" ]; then 
-            noyes=$(printf "No\nYes" | dmenu -i -p "${dir} does not exist, create it?") || exit 1
-            [ "$noyes" = "No" ] && exit 2
-            mkdir -p "/media/$dir"
-        fi
-
-        msg="$(sudo -A mount -o uid=1000,fmask=113,dmask=002 "/dev/${dev}" "$dir" 2>&1)"
-        if [ $? = 0 ]; 
-        then notifyPP "Successfully mounted device: /dev/${dev}." "SUCCESS"
-        else notifyPP "${msg}" "ERROR"
-        fi ;;
-
-    "-u"|"--umount")
-        # Unmounting
-        dev=$(lsblk -e 7,259 -n \
-                | grep -ve '/$' -e '/boot' -e 'part $' -e 'disk' \
-                | cut -d \  -f 1 \
-                | tr -d '└─' \
-                | dmenu -i -p "Unmounting which device?") \
-            || exit 1
-
-        msg="$(sudo -A umount "/dev/${dev}" 2>&1)"
-        if [ $? = 0 ]; 
-        then notifyPP "Successfully unmounted device: /dev/${dev}" "SUCCESS"
-        else notifyPP "${msg}" "ERROR"
-        fi ;;
-
-    *)
-        cat << EOF && exit 1 ;;
-Usage: $0 [-m | -u]
-    -a, --all
-        Mount all connected devices as specified in /etc/fstab
-    -h
-        Display help text and exit.
-    -m, --mount
-        Mounting a usb device chosen with dmenu.
-    -u, --umount
-        Unmounting a usb device chosen with dmenu.
-EOF
+    *) usage ;;
 esac
+exit 0

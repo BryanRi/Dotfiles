@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# Dmenu helper script that asks whether or not to create a directory.
+
+# Define these variables if they are not set as environment variables
+[ -z "$DMENU" ] && DMENU="dmenu -i -p"
+
+# Global variables
+dir=""
+
+usage() {
+    >&2 cat << EOF
+Usage: $0 [ search depth ] [ paths ] [ prompt ]
+    search depth, maximum depth to search. :: int
+    path, the full path to the to be created directory.
+    prompt, prompt given to dmenu.
+EOF
+    return
+}
+
+mk_dir() {  # Usage: mk_dir [ path ]
+    [ -d "$dir" ] && return 0
+    dmenu-noyes  "$dir does not exist, create it?" && mkdir -p "$dir"
+    return
+}
+
+choose_dir() {  # Usage: choose_dir [ search depth ] [ paths ] [ prompt ]
+    # paths must be a space seperated string.
+    # shellcheck disable=SC2086
+    dir="$(find $2 -maxdepth "$1" -type d  2> /dev/null \
+            | ${DMENU} "$3" -l 10)" \
+        || return 1
+    mk_dir
+    return
+}
+
+[ "$#" -e 3 ] && echo "$#" && usage && exit 1
+choose_dir "$1" "$2"  "$3" && echo "$dir"
+exit
