@@ -4,7 +4,7 @@ abbr -a webgoat 'java -jar ~/Downloads/webgoat-server-8.2.2.jar'
 ### Quickly change directories
 abbr -a .. 'cd ..'
 abbr -a ... 'cd ../..'
-abbr -a .ru 'cd $MY_MAIN_USB/ru'
+abbr -a .ru 'cd $MY_MAIN_USB/ru/'
 abbr -a .c 'cd $XDG_CONFIG_HOME/'
 abbr -a .b 'cd $MY_BIN_DIR/'
 abbr -a .d 'cd $MY_DESKTOP_DIR/'
@@ -26,9 +26,11 @@ abbr -a ,fv 'vim $XDG_CONFIG_HOME/fish/fish_variables'
 abbr -a ,ss 'vim $HOME/.local/suckless/st/config.def.h'
 abbr -a ,sd 'vim $HOME/.local/suckless/dwm/config.def.h'
 abbr -a ,sb 'vim $HOME/.local/suckless/dwmblocks/config.def.h'
+abbr -a ,. 'vim $HOME/.profile'
 
 ### Priviledge elevation
 abbr -a d 'doas'
+abbr -a n 'nvim'
 
 ### system
 abbr -a ssn 'doas poweroff'
@@ -60,7 +62,7 @@ abbr -a cleanup 'doas pacman -Rns \(pacman -Qtdq\)' # remove orphaned packages
 ### commands with extra flags
 abbr -a mvi 'mv -i'
 abbr -a cpi 'cp -i'
-abbr -a md 'mkdir -p'
+abbr -a md 'mkdir -pv'
 
 ### xclip copy and paste
 abbr -a xc 'xclip -selection c'

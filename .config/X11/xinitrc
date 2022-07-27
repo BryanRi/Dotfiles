@@ -25,6 +25,7 @@ fi
 # My custom scripts
 disable-xdg-screensaver
 fehbg &
+#xsetroot -cursor_name left_ptr
 
 # Daemons
 redshift -c "$XDG_CONFIG_HOME/redshift.conf" &  # Reduce te blue light emitted by the screen
@@ -35,8 +36,8 @@ pulseaudio --daemonize
 # Hardware settings
 # Find the name/id of the touchpad with 'xinput list' and 'xinput list-props
 # <device-name/id>' for all properties
-xinput set-prop 13 'libinput Tapping Enabled' 1
-xinput set-prop 13 'libinput Accel Speed' .5
+xinput set-prop 'DELL098F:00 04F3:311C Touchpad' 'libinput Tapping Enabled' 1
+xinput set-prop 'DELL098F:00 04F3:311C Touchpad' 'libinput Accel Speed' .5
 #amixer sset 'PGA3.1 3 Master' 50%
 
 # start the graphical environment

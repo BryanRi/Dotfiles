@@ -1,5 +1,5 @@
 " Quickly change directories
-nnoremap .ru :cd $MY_MAIN_USB/ru<CR>
+nnoremap .r :cd $MY_MAIN_USB/ru<CR>
 nnoremap .c :cd $XDG_CONFIG_HOME<CR>
 nnoremap .b :cd $MY_BIN_DIR<CR>
 nnoremap .d :cd $MY_DESKTOP_DIR<CR>
@@ -10,21 +10,22 @@ nnoremap .sd :cd $HOME/.local/suckless/dwm<CR>
 nnoremap .sb :cd $HOME/.local/suckless/dwmblocks<CR>
 
 " Edit config files
-nnoremap ,b :vim $HOME/.config/bash/bashrc<CR>
-nnoremap ,ba :vim $HOME/.config/bash/bash_aliases<CR>
-nnoremap ,awm :vim $HOME/.config/awesome/rc.lua<CR>
-nnoremap ,v :vim $HOME/.config/vim/vimrc<CR>
-nnoremap ,f :vim $HOME/.config/fish/config.fish<CR>
-nnoremap ,fa :vim $HOME/.config/fish/fish_aliases<CR>
-nnoremap ,fb :vim $HOME/.config/fish/fish_abbreviations<CR>
-nnoremap ,fv :vim $HOME/.config/fish/fish_variables<CR>
-nnoremap ,ss :vim $HOME/.local/suckless/st/config.def.h<CR>
-nnoremap ,sd :vim $HOME/.local/suckless/dwm/config.def.h<CR>
-nnoremap ,sb :vim $HOME/.local/suckless/dwmblocks/config.def.h<CR>
-nnoremap ,c :write | edit SMYVIFMRC | restart &<CR>
+nnoremap ,awm :vim $XDG_CONFIG_HOME/awesome/rc.lua<CR>
+nnoremap ,b   :vim $XDG_CONFIG_HOME/bash/bashrc<CR>
+nnoremap ,ba  :vim $XDG_CONFIG_HOME/bash/bash_aliases<CR>
+nnoremap ,f   :vim $XDG_CONFIG_HOME/fish/config.fish<CR>
+nnoremap ,fa  :vim $XDG_CONFIG_HOME/fish/fish_aliases<CR>
+nnoremap ,fb  :vim $XDG_CONFIG_HOME/fish/fish_abbreviations<CR>
+nnoremap ,fv  :vim $XDG_CONFIG_HOME/fish/fish_variables<CR>
+nnoremap ,v   :vim $XDG_CONFIG_HOME/nvim/init.vim<CR>
+nnoremap ,ss  :vim $HOME/.local/suckless/st/config.def.h<CR>
+nnoremap ,sd  :vim $HOME/.local/suckless/dwm/config.def.h<CR>
+nnoremap ,sb  :vim $HOME/.local/suckless/dwmblocks/config.def.h<CR>
+nnoremap ,c   :write | edit SMYVIFMRC | restart &<CR>
 
 " Start shell in current directory
-nnoremap s :shell<CR>
+nnoremap ss :shell<CR>
+nnoremap st :!$TERMINAL &<CR>
 
 " Toggle visibility of preview wondow
 nnoremap w :view<CR>

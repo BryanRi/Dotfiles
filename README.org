@@ -1,14 +1,15 @@
 * Dotfiles
 This repo is a collection of my dotfiles. They should work on any Unix
-based OS and are used by me on Ubuntu 20.04 LTS. The most note worthy
-configs are:
-- =awesomewm=, --- Window manager
+based OS and are used by me on Artix. The most note worthy configs are:
+- =awesomewm=[1], --- Window manager
 - =bash=, =fish= --- Shells
 - =(n)vim= --- Editor
 - =vifm= --- File manager
 - =emacs= --- Productivity environment
 - And many other (mostly terminal) programs.
 There are also lots of usefull scripts in =.local/bin=.
+[1]: The Awesome window manager was last used on Ubuntu 20.04 LTS and very like
+won't work as is on other distro's.
 
 * Other configs
 I also use some Suckless software that each have their own dedicated repo.
@@ -20,18 +21,23 @@ I also use some Suckless software that each have their own dedicated repo.
 I manage my dotfiles using the git bare repo method, discribed in this [[https://www.atlassian.com/git/tutorials/dotfiles][article]].
 Use this script to automatically setup all of my dotfiles on a new system:
 #+BEGIN_SRC
-git clone --bare git@github.com:BryanRi/Dotfiles.git $HOME/.dots
+#!/bin/sh
+
+git clone --bare git@github.com:BryanRi/Dotfiles.git $HOME/.dotfiles
+
 function dots {
-   /usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME $@
+   /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME $@
 }
-config checkout
-if [ $? = 0 ]; then
-  echo "Checked out config.";
+
+if config checkout; then
+  echo "Checked out config."
   else
     mkdir -p .config-backup
-    echo "Backing up pre-existing dot files.";
+    echo "Backing up pre-existing dot files."
     dots checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
     config checkout
-fi;
+fi
+
 dots config status.showUntrackedFiles no
+
 #+END_SRC

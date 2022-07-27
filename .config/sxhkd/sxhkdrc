@@ -11,16 +11,13 @@
 # 2 is the number specified in dwmblocks/config.h as 'signal'
 XF86AudioRaiseVolume
   pactl set-sink-volume 4 +5% && sigdwmblocks 2
-#  amixer -D pulse sset Master 5%+
 XF86AudioLowerVolume
   pactl set-sink-volume 4 -5% && sigdwmblocks 2
-#  amixer -D pulse sset Master 5%-
 XF86AudioMute
   pactl set-sink-mute 4 toggle && sigdwmblocks 2
-#  amixer -D pulse sset Master toggle
 
 {XF86MonBrightnessUp, XF86MonBrightnessDown}
-  sudo chbrightness {+, -}
+  $SUDO chbrightness {+, -}
 
 super + shift + x
     slock
@@ -29,7 +26,6 @@ super + shift + x
 # Program launcher
 super + r
     dmenu_run
-#    rofi -show run -theme $HOME/.config/rofi/themes/dmenu.rasi
 
 # Terminal
 super + c
@@ -43,9 +39,9 @@ super + a
 
 # dmenu
 super + shift + s
-    $HOME/.local/bin/dmenu-scrot
+    $MY_BIN_DIR/dmenu-scrot
 super + {slash, question}
-    /usr/local/bin/dmenu-mount {'-m', '-u'}
+    $MY_BIN_DIR/dmenu-mount {'-m', '-u'}
 
 # GUI
 super + b
@@ -54,5 +50,3 @@ super + p
     emacs
 super + l
      pcmanfm
-#    GTK_THEME=Adwaita:dark nautilus
-

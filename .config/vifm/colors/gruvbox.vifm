@@ -9,7 +9,7 @@ highlight TopLine	    cterm=none	        ctermfg=138	    ctermbg=235
 highlight TopLineSel	cterm=bold	        ctermfg=138	    ctermbg=237
 
 highlight Win		    cterm=none	        ctermfg=138	    ctermbg=default
-highlight CurrLine	    cterm=bold,inverse	ctermfg=94	    ctermbg=default
+highlight CurrLine	    cterm=bold,inverse	ctermfg=94      ctermbg=0
 highlight OtherLine	    cterm=bold	        ctermfg=default	ctermbg=235
 highlight Selected	    cterm=none	        ctermfg=223	    ctermbg=237
 
@@ -40,27 +40,27 @@ highlight /^.*\.(mp3)$/ ctermfg=91
 "Available group-name values:
 "Win		    - color of all windows (views, dialogs, menus) and default color for their content (e.g. regular files in views)
 "AuxWin		    - color of auxiliary areas of windows
-"OtherWin	    - color of inactive pane
 "Border		    - color of vertical parts of the border
+"BrokenLink		- color of broken symbolic links
+"CmdLine		- the command line/status bar color
+"CmpMismatch	- color of mismatched files in side-by-side comparison by path
+"CurrLine		- line at cursor position in active view
+"Device         - color of block and character devices
+"Directory		- color of directories
+"ErrorMsg		- color of error messages in the status bar
+"Executable		- color of executable files
+"Fifo           - color of fifo pipes
+"JobLine		- color of job line that appears above the status line
+"Link           - color of symbolic links in the views
+"OtherLine		- line at cursor position in inactive view
+"OtherWin	    - color of inactive pane
+"Selected		- color of selected files
+"Socket         - color of sockets
+"StatusLine		- color of the line above the status bar
+"SuggestBox		- color of key suggestion box
 "TabLine		- tab line color (for 'tabscope' set to "global")
 "TabLineSel		- color of the tip of selected tab (regardless of 'tabscope')
-"TopLineSel		- top line color of the current pane
 "TopLine		- top line color of the other pane
-"CmdLine		- the command line/status bar color
-"ErrorMsg		- color of error messages in the status bar
-"StatusLine		- color of the line above the status bar
-"JobLine		- color of job line that appears above the status line
-"WildMenu		- color of the wild menu items
-"SuggestBox		- color of key suggestion box
-"CurrLine		- line at cursor position in active view
-"OtherLine		- line at cursor position in inactive view
-"Selected		- color of selected files
-"CmpMismatch	- color of mismatched files in side-by-side comparison by path
-"Directory		- color of directories
-"BrokenLink		- color of broken symbolic links
-"Executable		- color of executable files
-"Socket         - color of sockets
-"Device         - color of block and character devices
-"Link           - color of symbolic links in the views
-"Fifo           - color of fifo pipes
+"TopLineSel		- top line color of the current pane
 "User1..User9   - 9 colors which can be used via %* 'statusline' macro
+"WildMenu		- color of the wild menu items
