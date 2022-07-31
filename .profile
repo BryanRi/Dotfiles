@@ -30,7 +30,7 @@ fi
 # Personal programs, theme, directories and other variables useful for aliases
 # and scripting.
 export BROWSER='librewolf'
-export DMENU="dmenu -i -p"
+export DMENU='dmenu -i -p'
 export EDITOR='nvim'
 export MY_BIN_DIR="$HOME/.local/mybin"  # My personal script directory
 export MY_DESKTOP_DIR="$HOME/top"       # My downloads directory
@@ -39,7 +39,7 @@ export MY_DOWNLOADS_DIR="$HOME/dox/dls" # My downloads directory
 export MY_MAIN_USB="$MY_DOCUMENTS_DIR/mnt/verbatim" # Mount point for my main usb
 export MY_PICTURES_DIR="$HOME/dox/pix"  # My pictures directory
 export SHELL='/bin/fish'
-export SUDO="doas"  # replace with 'sudo -A' if using sudo instead of doas
+export SUDO='doas'  # replace with 'sudo -A' if using sudo instead of doas
 export TERMINAL='st'
 export THEME='dark'
 # Exa theming
@@ -56,12 +56,11 @@ export XDG_STATE_HOME="$HOME/.local/state"  #              /var/lib
 export XDG_RUNTIME_DIR="/run/user/$(echo $USER | xargs -I {} grep '^{}:' /etc/passwd | cut -d : -f 3)"
 export XDG_DATA_DIRS="/usr/local/share:/usr/share"
 export XDG_CONFIG_DIRS="/etc/xdg"
-# Moving config files from $HOME to $XDG_CONFIG_HOME
+# Moving config files from $HOME to their proper XDG location
 export CABAL_CONFIG="$XDG_CONFIG_HOME/cabal/config"         # Haskell
 export CABAL_DIR="$XDG_CACHE_HOME/cabal"                    # Haskell
 export CARGO_HOME="$XDG_DATA_HOME/cargo"                    # Rust
 export GHCUP_USE_XDG_DIRS='True'                            # Haskell
-export GTK_RC_FILES="$XDG_CONFIG_HOME/gtk-1.0/gtkrc-1.0"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
 export HISTFILE="$XDG_STATE_HOME/bash/history"
 export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"        # Jupyter (Python)
@@ -93,8 +92,5 @@ Which window manager would you like to start:
     none   )   Stay in tty
 EOF
     read WM
-    [ "$WM" = "none" ] && exit 0
-    [ "$WM" = "a" ] && exec startx "$XDG_CONFIG_HOME/X11/xinitrc" "awesomewm"
-    [ "$WM" = "x" ] && exec startx "$XDG_CONFIG_HOME/X11/xinitrc" "xmonad"
-    exec startx "$XDG_CONFIG_HOME/X11/xinitrc"
+    [ "$WM" != 'none' ] && exec startx "$XDG_CONFIG_HOME/X11/xinitrc" "$WM"
 fi
