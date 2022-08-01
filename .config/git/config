@@ -1,0 +1,7 @@
+[user]
+	name = Bryan Rinders
+	email = 46681553+BryanRi@users.noreply.github.com
+[init]
+	defaultBranch = main
+[pull]
+	rebase = false
