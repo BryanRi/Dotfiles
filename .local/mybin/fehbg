@@ -1,3 +1,3 @@
 #!/bin/bash
 
-feh --bg-scale --no-fehbg --randomize "$MY_PICTURES_DIR/wals"
+feh --bg-scale --no-fehbg --randomize "$XDG_PICTURES_DIR/wals"

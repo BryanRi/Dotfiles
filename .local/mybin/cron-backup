@@ -17,8 +17,6 @@ fi
 notify-send -t 5000 "Creating; ${target}"
 
 tar czf "${target}" \
-    "$HOME/Desktop" \
-    "$HOME/Downloads" \
-    "$HOME/Pictures" \
+    "$XDG_DOCUMENTS_DIR" \
     "$HOME/.config/BraveSoftware/Brave-Browser/Default/Bookmarks"
     #"/var/spool/cron/crontabs/br"  # requires root rights

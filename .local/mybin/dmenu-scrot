@@ -17,12 +17,12 @@ export DMENU="dmenu -i -p"
 # Global variables
 # shellcheck disable=SC2016
 DEFAULT_NAME="$(date '+%Y-%m-%d-%H%M%S')_scrot"
-DEFAULT_DIR="$MY_PICTURES_DIR/shots"
+DEFAULT_DIR="$XDG_PICTURES_DIR/shots"
 DEFAULT_FULL_PATH="${DEFAULT_DIR}${DEFAULT_NAME}"
 [ -d "$DEFAULT_DIR" ] || mkdir -p "$DEFAULT_DIR"
-SEARCH_DIRS="${MY_PICTURES_DIR} \
-             ${MY_DOCUMENTS_DIR}/mnt \
-             ${MY_DESKTOP_DIR} \
+SEARCH_DIRS="${XDG_PICTURES_DIR} \
+             ${XDG_DOCUMENTS_DIR}/mnt \
+             ${XDG_DESKTOP_DIR} \
              /mnt"
 
 usage() {
@@ -33,7 +33,7 @@ EOF
 
 take_scrot() {
     # shellcheck disable=SC2016,SC2086
-    scrot "$1" $2 -e 'mv $f $$MY_PICTURES_DIR/shots/' || return 1
+    scrot "$1" $2 -e 'mv $f $$XDG_PICTURES_DIR/shots/' || return 1
     [ "${DEFAULT_FULL_PATH}" = "${full_path}" ] || mv "${DEFAULT_FULL_PATH}" "${full_path}"
     return
 }
