@@ -4,7 +4,7 @@ source '$XDG_CONFIG_HOME/vifm/vifm-marks'
 " ------------------------------------------------------------------------------
 
 " Dynamically selected color scheme based on env variable
-if $THEME == "Dark"
+if $THEME == "dark"
     colorscheme gruvbox
 else
     colorscheme gruvbox-light
