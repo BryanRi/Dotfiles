@@ -30,10 +30,10 @@ augroup end
 
 """ Color scheme 
 syntax on
-if $THEME == "Dark"
-    set bg=dark
-else
+if $THEME == "light"
     set bg=light
+else
+    set bg=dark
 endif
 colorscheme gruvbox
 
