@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# Dependencies:
+# - find-mirrors.awk
+# - pacman-contrib
+
+archurl="https://archlinux.org/mirrorlist/all/"
+archmirrors="/etc/pacman.d/mirrorlist-arch"
+archcountry="Netherlands"
+
+artixurl="https://gitea.artixlinux.org/packagesA/artix-mirrorlist/raw/branch/master/trunk/mirrorlist"
+artixmirrors="/etc/pacman.d/mirrorlist"
+artixcountry="Europe"
+
+cur_date=$(date '+%Y-%m-%d')
+
+rank() {
+    [ -f "${1}" ] && mv "${1}" "${1}_${cur_date}.bak"
+    printf "\
+##
+## %s Linux mirrorlist
+## Generated on ${cur_date}
+##\n\n" "${4}" \
+        | ${SUDO} tee "${1}" > /dev/null
+    curl --silent "${2}" \
+        | find-mirrors.awk -v country="${3}" \
+        | rankmirrors - \
+        | ${SUDO} tee "${1}" 
+}
+
+rank "${archmirrors}" "${archurl}" "${archcountry}" "Arch"
+rank "${artixmirrors}" "${artixurl}" "${artixcountry}" "Artix"
