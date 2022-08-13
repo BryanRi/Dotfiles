@@ -25,7 +25,7 @@ super + shift + x
 ### Launch Applications ###
 # Program launcher
 super + r
-    dmenu_run
+    dmenu_run -p "RUN "
 
 # Terminal
 super + c
