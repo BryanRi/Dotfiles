@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# Set up virt-manager in artix linux
+#
+# Upon opening Virt-Manager for the first time, it will default to the system
+# variant (root) of the QEMU connection. This can be changed to the user
+# connection by going to: File > Connection > Add New Connection.
+# Now select QEMU/KVM User session as the Hypervison and click OK. This will
+# now auto-connect to the user session. You can now disconnect and remove the
+# system connection if desired. 
+
+case "$1" in
+    install)
+        ${SUDO} pacman -S --needed virt-manager qemu-desktop libvirt \
+            libvirt-runit edk2-ovmf dnsmasq iptables-nft
+
+        printf "
+        unix_sock_group = 'libvirt'
+        unix_sock_rw_perms = '0770'" \
+            | sudo tee -a /etc/libvirt/libvirtd.conf
+
+        ${SUDO} sed -i "s/#user = \"libvirt-qemu\"/user = \"${USER}\"/ \
+                     ; s/#group = \"libvirt-qemu\"/group = \"${USER}\"/" \
+                    /etc/libvirt/qemu.conf
+
+        ${SUDO} usermod -aG libvirt "${USER}"
+        ${SUDO} ln -s /etc/runit/sv/libvirtd /run/runit/service ;;
+    start) ${SUDO} unlink /run/runit/service/libvirtd/down ;;
+    stop ) ${SUDO} touch  /run/runit/service/libvirtd/down ;;
+
+    *) >&2 echo "Wrong usage" ;;
+esac
