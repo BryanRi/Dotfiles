@@ -3,6 +3,6 @@
 # TODO:
 #  - Use dmenu to ask for music dir
 
-genre=$(find "$XDG_DOCUMENTS_DIR/music2021/" -type d | dmenu -i -p "Which genre to play?") || exit 1
+genre=$(find "$XDG_DOCUMENTS_DIR/music2021/" -type d | ${DMENU} "Which genre to play?" -l 10) || exit 1
 
 find "${genre}" -name '*.mp3' | shuf | xargs -I {} mpv '{}' &
